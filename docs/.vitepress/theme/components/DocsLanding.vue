@@ -15,10 +15,7 @@
         </div>
       </div>
       <div class="docs-hero__media">
-        <img
-          src="/tenney-web/assets/screens/screen-01-lattice-overview.png"
-          alt="Tenney lattice overview screen"
-        />
+        <img :src="TENNEY_SCREEN" alt="Tenney lattice overview screen" />
       </div>
     </div>
 
@@ -146,6 +143,7 @@
 import { withBase } from "vitepress";
 
 const BETA_URL = "https://example.com/beta";
+const TENNEY_SCREEN = "/tenney-web/assets/screens/screen-01-lattice-overview.png";
 
 const links = {
   gettingStarted: withBase("/getting-started/"),
