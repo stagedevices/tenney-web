@@ -4,7 +4,7 @@ import AppStoreBadge from '../../components/AppStoreBadge';
 import ParallaxLayer from '../../components/ParallaxLayer';
 import SafeImage from '../../components/SafeImage';
 import { NIGHTLY_URL } from '../../config';
-import ShaderNarrativeBackground from '../../shaders/ShaderNarrativeBackground';
+import LiquidMetalBackground from '../../shaders/LiquidMetalBackground';
 import { assetUrl } from '../../utils/assets';
 
 const ShaderNarrativeHero = () => {
@@ -21,9 +21,21 @@ const ShaderNarrativeHero = () => {
 
   const hue = useTransform(progress, [0, 0.35, 0.7, 1], [210, 210, 28, 210]);
   const energy = useTransform(progress, [0, 0.25, 0.6, 0.85, 1], [0.15, 0.35, 0.75, 0.45, 0.2]);
-  const flow = useTransform(progress, [0, 1], [0.08, 0.22]);
-  const lightAngle = useTransform(progress, [0, 1], [18, 96]);
-  const vignette = useTransform(progress, [0.85, 1], [0, 0.6]);
+  const hueRotateDeg = useTransform(hue, (value) => value - 210);
+  const saturate = useTransform(energy, (value) => 1 + value * 0.8);
+  const contrast = useTransform(energy, (value) => 1 + value * 0.28);
+  const brightness = useTransform(energy, (value) => 0.92 + value * 0.1);
+  const filterString = useTransform(
+    [hueRotateDeg, saturate, contrast, brightness],
+    (values) => {
+      const [nextHueRotate, nextSaturate, nextContrast, nextBrightness] = values as number[];
+      return `hue-rotate(${nextHueRotate.toFixed(1)}deg) saturate(${nextSaturate.toFixed(
+        2
+      )}) contrast(${nextContrast.toFixed(2)}) brightness(${nextBrightness.toFixed(2)})`;
+    }
+  );
+
+  const orangeWashOpacity = useTransform(progress, [0.6, 0.78, 0.9], [0, 0.22, 0]);
 
   const deviceY = reducedMotion ? useMotionValue(0) : useTransform(progress, [0, 0.5, 1], [6, -6, 4]);
   const deviceScale = reducedMotion ? useMotionValue(1) : useTransform(progress, [0, 0.5, 1], [1, 1.015, 1]);
@@ -47,14 +59,12 @@ const ShaderNarrativeHero = () => {
       <div id="cta" className="pointer-events-none absolute top-[260vh] h-px w-px" aria-hidden="true" />
       <div className="sticky top-0 h-screen">
         <div className="relative h-full overflow-hidden">
-          <ShaderNarrativeBackground
-            className="pointer-events-none absolute inset-0"
-            hue={hue}
-            energy={energy}
-            flow={flow}
-            angle={lightAngle}
-            vignette={vignette}
-            reducedMotion={reducedMotion}
+          <motion.div className="pointer-events-none absolute inset-0" style={{ filter: filterString }}>
+            <LiquidMetalBackground className="pointer-events-none absolute inset-0" />
+          </motion.div>
+          <motion.div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(255,140,60,0.18),transparent_55%)]"
+            style={{ opacity: orangeWashOpacity }}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-black/80" />
           <div className="relative z-10 flex h-full items-center">
@@ -66,7 +76,6 @@ const ShaderNarrativeHero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: reducedMotion ? 0.5 : 0.9, ease: 'easeOut' }}
                 >
-                  <p className="text-xs uppercase tracking-[0.4em] text-white/60">ShaderNarrative</p>
                   <h1 className="text-5xl font-semibold leading-tight text-white md:text-6xl">
                     Pitch as a physical space.
                   </h1>
