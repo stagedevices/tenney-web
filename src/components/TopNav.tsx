@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "../lib/theme";
+import TenneyButton from "./TenneyButton";
 
 const modes = [
   { id: "system", label: "Auto" },
@@ -36,6 +37,21 @@ export default function TopNav() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          <TenneyButton
+            as={Link}
+            to="/beta"
+            variant="icon"
+            size="sm"
+            aria-label="Open beta page"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 3l1.9 4.6L19 9.3l-4.1 3.6L16 18l-4-2.4L8 18l1.1-5.1L5 9.3l5.1-1.7L12 3z"
+              />
+            </svg>
+          </TenneyButton>
           <div className="glass-pill flex rounded-pill p-1 text-xs text-slate-700 dark:text-slate-200">
             {modes.map((item) => (
               <button

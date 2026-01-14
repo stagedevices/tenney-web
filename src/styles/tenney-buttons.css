@@ -1,0 +1,242 @@
+.tenney-btn {
+  --tenney-btn-height: 44px;
+  --tenney-btn-padding: 0 1.3rem;
+  --tenney-btn-font-size: 0.95rem;
+  --tenney-btn-icon-size: 20px;
+  --tenney-btn-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(245, 247, 250, 0.7));
+  --tenney-btn-color: inherit;
+  --tenney-btn-border: rgba(255, 255, 255, 0.5);
+  --tenney-btn-shadow: 0 12px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.12);
+  --tenney-btn-shadow-hover: 0 16px 28px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.14);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.32);
+  --tenney-btn-magnet-opacity: 0.22;
+  --tenney-btn-sweep-color: rgba(255, 255, 255, 0.55);
+  --tenney-btn-plusgrid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M14 9v10M9 14h10' stroke='%230f172a' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: var(--tenney-btn-height);
+  padding: var(--tenney-btn-padding);
+  border-radius: 10px;
+  border: 1px solid var(--tenney-btn-border);
+  background: var(--tenney-btn-bg);
+  color: var(--tenney-btn-color);
+  font-size: var(--tenney-btn-font-size);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  box-shadow: var(--tenney-btn-shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, color 0.18s ease,
+    background 0.18s ease;
+  --mx: 0.5;
+  --my: 0.5;
+}
+
+.tenney-btn::before {
+  content: "";
+  position: absolute;
+  inset: -60% -20%;
+  background: linear-gradient(120deg, transparent 0%, var(--tenney-btn-sweep-color) 45%, rgba(255, 255, 255, 0.12) 60%, transparent 75%);
+  opacity: 0;
+  transform: translateX(-120%) rotate(12deg);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.tenney-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120px circle at calc(var(--mx) * 100%) calc(var(--my) * 100%), rgba(255, 255, 255, 0.45), transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  border-radius: inherit;
+}
+
+.tenney-btn:hover,
+.tenney-btn:focus-visible {
+  box-shadow: var(--tenney-btn-shadow-hover);
+}
+
+.tenney-btn:hover::after,
+.tenney-btn:focus-visible::after {
+  opacity: var(--tenney-btn-magnet-opacity);
+}
+
+.tenney-btn.is-sweeping::before {
+  opacity: 1;
+  animation: tenney-btn-sweep 0.9s ease;
+}
+
+.tenney-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--tenney-btn-focus), var(--tenney-btn-shadow-hover);
+}
+
+.tenney-btn:active {
+  box-shadow: var(--tenney-btn-shadow);
+}
+
+.tenney-btn--primary {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(5, 219, 254, 0.9), rgba(2, 156, 254, 0.92));
+  --tenney-btn-color: #0b0f15;
+  --tenney-btn-border: rgba(255, 255, 255, 0.65);
+  --tenney-btn-shadow: 0 16px 30px rgba(2, 156, 254, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.4);
+  --tenney-btn-shadow-hover: 0 20px 34px rgba(2, 156, 254, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.5);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.45);
+  --tenney-btn-magnet-opacity: 0.4;
+  --tenney-btn-sweep-color: rgba(255, 255, 255, 0.65);
+}
+
+.tenney-btn--secondary {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(245, 247, 252, 0.6));
+  --tenney-btn-border: rgba(255, 255, 255, 0.55);
+  --tenney-btn-shadow: 0 12px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.16);
+  --tenney-btn-shadow-hover: 0 16px 28px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.2);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.22);
+  --tenney-btn-magnet-opacity: 0.26;
+  background-image: var(--tenney-btn-plusgrid), var(--tenney-btn-bg);
+  background-size: 28px 28px, cover;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: overlay, normal;
+}
+
+.tenney-btn--secondary.tenney-btn--warm {
+  --tenney-btn-focus: rgba(255, 123, 47, 0.35);
+  --tenney-btn-shadow: 0 12px 24px rgba(255, 123, 47, 0.16), inset 0 1px 0 rgba(255,  255, 255, 0.65),
+    inset 0 -1px 0 rgba(255, 123, 47, 0.18);
+  --tenney-btn-shadow-hover: 0 16px 30px rgba(255, 123, 47, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(255, 123, 47, 0.22);
+}
+
+.tenney-btn--ghost {
+  --tenney-btn-bg: transparent;
+  --tenney-btn-border: var(--tenney-line);
+  --tenney-btn-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --tenney-btn-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 8px 18px rgba(15, 23, 42, 0.1);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.22);
+  --tenney-btn-magnet-opacity: 0.16;
+}
+
+.tenney-btn--icon {
+  padding: 0;
+  width: var(--tenney-btn-height);
+  border-radius: 999px;
+  gap: 0;
+}
+
+.tenney-btn--icon.tenney-btn--square {
+  border-radius: 12px;
+}
+
+.tenney-btn--icon svg,
+.tenney-btn--icon span,
+.tenney-btn--icon img {
+  width: var(--tenney-btn-icon-size);
+  height: var(--tenney-btn-icon-size);
+}
+
+.tenney-btn--sm {
+  --tenney-btn-height: 36px;
+  --tenney-btn-padding: 0 1rem;
+  --tenney-btn-font-size: 0.85rem;
+  --tenney-btn-icon-size: 18px;
+}
+
+.tenney-btn--md {
+  --tenney-btn-height: 44px;
+  --tenney-btn-padding: 0 1.3rem;
+  --tenney-btn-font-size: 0.95rem;
+  --tenney-btn-icon-size: 20px;
+}
+
+.tenney-btn--lg {
+  --tenney-btn-height: 52px;
+  --tenney-btn-padding: 0 1.6rem;
+  --tenney-btn-font-size: 1rem;
+  --tenney-btn-icon-size: 22px;
+}
+
+.tenney-btn.is-disabled,
+.tenney-btn:disabled,
+.tenney-btn[aria-disabled="true"] {
+  opacity: 0.7;
+  pointer-events: none;
+  cursor: not-allowed;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.08);
+}
+
+.tenney-btn.is-disabled::before,
+.tenney-btn.is-disabled::after,
+.tenney-btn:disabled::before,
+.tenney-btn:disabled::after,
+.tenney-btn[aria-disabled="true"]::before,
+.tenney-btn[aria-disabled="true"]::after {
+  opacity: 0;
+  animation: none;
+}
+
+.dark .tenney-btn {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(12, 16, 24, 0.8), rgba(10, 12, 20, 0.7));
+  --tenney-btn-border: rgba(255, 255, 255, 0.12);
+  --tenney-btn-shadow: 0 16px 30px rgba(2, 6, 20, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(5, 8, 18, 0.6);
+  --tenney-btn-shadow-hover: 0 20px 34px rgba(2, 6, 20, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(5, 8, 18, 0.7);
+  --tenney-btn-color: rgba(240, 245, 255, 0.9);
+}
+
+.dark .tenney-btn--primary {
+  --tenney-btn-shadow: 0 18px 34px rgba(1, 8, 20, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.35);
+  --tenney-btn-shadow-hover: 0 22px 38px rgba(1, 8, 20, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.45);
+  --tenney-btn-color: #0b0f15;
+}
+
+.dark .tenney-btn--secondary {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(18, 22, 32, 0.85), rgba(12, 16, 24, 0.7));
+  --tenney-btn-border: rgba(255, 255, 255, 0.16);
+  --tenney-btn-color: rgba(232, 238, 248, 0.92);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.3);
+  background-image: var(--tenney-btn-plusgrid), var(--tenney-btn-bg);
+}
+
+.dark .tenney-btn--ghost {
+  --tenney-btn-border: rgba(255, 255, 255, 0.18);
+  --tenney-btn-color: rgba(232, 238, 248, 0.92);
+}
+
+@keyframes tenney-btn-sweep {
+  from {
+    transform: translateX(-120%) rotate(12deg);
+  }
+  to {
+    transform: translateX(120%) rotate(12deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tenney-btn {
+    transition: box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+
+  .tenney-btn::before,
+  .tenney-btn::after {
+    display: none;
+  }
+}
