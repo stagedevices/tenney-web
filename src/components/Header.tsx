@@ -1,10 +1,10 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import AppStoreBadge from './AppStoreBadge';
 import { NIGHTLY_URL } from '../config';
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isInstrument, setIsInstrument] = useState(false);
   const isHome = location.pathname === '/';
 
@@ -22,6 +22,24 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHome]);
+
+  const handleDownload = () => {
+    if (!isHome) {
+      navigate('/');
+      window.setTimeout(() => {
+        const target = document.getElementById('cta');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+      return;
+    }
+
+    const target = document.getElementById('cta');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <header
@@ -58,7 +76,13 @@ const Header = () => {
           <a className="text-xs uppercase tracking-[0.3em] text-white/60 hover:text-white" href={NIGHTLY_URL}>
             TestFlight
           </a>
-          <AppStoreBadge variant="white" className="hidden xl:inline-flex" />
+          <button
+            type="button"
+            onClick={handleDownload}
+            className="text-xs uppercase tracking-[0.3em] text-white/80 hover:text-white"
+          >
+            Download
+          </button>
         </div>
       </div>
     </header>
