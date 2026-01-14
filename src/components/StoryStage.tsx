@@ -215,20 +215,20 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
 
   return (
     <>
-      <section className={`story-viewport ${isActive ? "story-locked" : ""} relative`}>
-        <div className="mx-auto grid h-full max-w-6xl items-center gap-10 px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      <section className={`story-viewport ${isActive ? "story-locked" : ""} relative z-10`}>
+        <div className="mx-auto grid h-full max-w-6xl items-center gap-10 px-6 md:grid-cols-[minmax(0,1fr)_360px] lg:grid-cols-[minmax(0,1fr)_420px]">
           <div className="flex w-full flex-col items-start justify-center">
-          <BeatCard beat={activeBeat} index={activeIndex} total={total} active={isActive} />
-          <div className="mt-4 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-            <span>Scroll to explore</span>
-            <button
-              type="button"
-              onClick={() => releaseStory({ didComplete: false, shouldScroll: false })}
-              className="rounded-pill border border-tenney-line px-3 py-1 text-xs font-semibold uppercase tracking-widest"
-            >
-              Skip
-            </button>
-          </div>
+            <BeatCard beat={activeBeat} index={activeIndex} total={total} active={isActive} />
+            <div className="mt-4 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <span>Scroll to explore</span>
+              <button
+                type="button"
+                onClick={() => releaseStory({ didComplete: false, shouldScroll: false })}
+                className="rounded-pill border border-tenney-line px-3 py-1 text-xs font-semibold uppercase tracking-widest"
+              >
+                Skip
+              </button>
+            </div>
           </div>
           <div className="hidden w-full items-center justify-center md:flex">
             <StickyPhone beats={beats} activeIndex={activeIndex} />

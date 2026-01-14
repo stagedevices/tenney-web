@@ -36,7 +36,7 @@ export default function StickyPhone({ beats, activeIndex }: StickyPhoneProps) {
   const cropHeight = `${(1 + CROP_TOP) * 100}%`;
 
   return (
-    <div className="sticky top-24" ref={containerRef}>
+    <div className="sticky top-24 z-20 mx-auto w-[min(420px,100%)] min-w-[280px]" ref={containerRef}>
       <div
         className={`relative mx-auto w-full max-w-[360px] rounded-[36px] bg-white/40 p-5 shadow-softer backdrop-blur-xl dark:bg-slate-900/40 ${glowClass}`}
         style={{
