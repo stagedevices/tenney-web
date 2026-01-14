@@ -1,19 +1,17 @@
 import { useTheme } from "../lib/theme";
 import TenneyButton from "./TenneyButton";
 
-const APP_STORE_LINK =
+export const APP_STORE_LINK =
   "https://apps.apple.com/us/app/tenney/id6753315813?itscg=30200&itsct=apps_box_badge&mttnsubad=6753315813";
-const APP_STORE_BADGE_LIGHT =
+export const APP_STORE_BADGE_LIGHT =
   "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1764547200";
-const APP_STORE_BADGE_DARK =
+export const APP_STORE_BADGE_DARK =
   "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/en-us?releaseDate=1764547200";
 
-const BETA_LINK = "https://example.com/tenney-beta";
-const NIGHTLY_LINK = "https://example.com/tenney-nightly";
+export const BETA_LINK = "https://testflight.apple.com/join/mWAWKYHT";
 
 export const betaLinks = {
   beta: BETA_LINK,
-  nightly: NIGHTLY_LINK,
 };
 
 export default function CTACluster() {
@@ -35,16 +33,6 @@ export default function CTACluster() {
           variant="primary"
         >
           Join TestFlight Beta
-        </TenneyButton>
-        <TenneyButton
-          href={NIGHTLY_LINK}
-          target="_blank"
-          rel="noreferrer"
-          as="a"
-          size="sm"
-          variant="secondary"
-        >
-          Nightly Builds
         </TenneyButton>
       </div>
     </div>
