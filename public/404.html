@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tenney</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        var locationPath = window.location.pathname.replace('/tenney-web', '');
+        var newUrl = '/tenney-web/?/' + locationPath.replace(/^\//, '');
+        if (window.location.search) {
+          newUrl += window.location.search.replace('?', '&');
+        }
+        if (window.location.hash) {
+          newUrl += window.location.hash;
+        }
+        window.location.replace(newUrl);
+      })();
+    </script>
+  </body>
+</html>
