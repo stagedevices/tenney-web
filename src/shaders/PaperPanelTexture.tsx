@@ -1,21 +1,17 @@
-import { LiquidMetal } from '@paper-design/shaders-react';
+import { PaperTexture } from '@paper-design/shaders-react';
 import { SHADER_DPR, SHADER_MAX_PIXELS, SHADER_SEED, SHADERS_ENABLED } from './shaderConfig';
 
-const LiquidMetalBackground = ({ className }: { className?: string }) => {
+const PaperPanelTexture = ({ className }: { className?: string }) => {
   if (!SHADERS_ENABLED) {
     return <div className={className} aria-hidden />;
   }
 
   return (
     <div className={className} aria-hidden>
-      <LiquidMetal
+      <PaperTexture
         className="h-full w-full"
-        colorBack="#0B0E14"
-        colorTint="#2B8CFF"
-        distortion={0.35}
-        contour={0.6}
-        repetition={5}
-        angle={35}
+        colorFront="#F6F3EE"
+        colorBack="#ECE7DD"
         speed={0}
         frame={SHADER_SEED}
         minPixelRatio={SHADER_DPR}
@@ -25,4 +21,4 @@ const LiquidMetalBackground = ({ className }: { className?: string }) => {
   );
 };
 
-export default LiquidMetalBackground;
+export default PaperPanelTexture;

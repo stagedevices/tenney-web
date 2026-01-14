@@ -1,44 +1,65 @@
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
 import AppStoreBadge from './AppStoreBadge';
+import { NIGHTLY_URL } from '../config';
 
 const Header = () => {
-  const [compact, setCompact] = useState(false);
   const location = useLocation();
-  const paperMode = location.pathname.startsWith('/docs');
+  const [isInstrument, setIsInstrument] = useState(false);
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
-    const sentinel = document.querySelector('[data-hero-sentinel]');
-    if (!sentinel) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setCompact(!entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, []);
+    if (!isHome) {
+      setIsInstrument(true);
+      return;
+    }
 
-  const baseText = paperMode ? 'text-black/80' : 'text-white/80';
-  const hoverText = paperMode ? 'hover:text-black' : 'hover:text-white';
-  const ringColor = paperMode ? 'focus-visible:outline-black' : 'focus-visible:outline-e3blue';
+    const handleScroll = () => {
+      setIsInstrument(window.scrollY > window.innerHeight * 0.8);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isHome]);
 
   return (
-    <header className={`fixed left-0 top-0 z-40 w-full transition ${compact ? (paperMode ? 'bg-white/80 border-b border-black/10 backdrop-blur' : 'bg-black/40 backdrop-blur border-b border-white/10') : 'bg-transparent'}`}>
+    <header
+      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
+        isInstrument
+          ? 'border-b border-white/10 bg-[#05070B]/90 backdrop-blur-xl'
+          : 'bg-transparent'
+      }`}
+    >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <NavLink to="/" className={`flex items-center gap-3 ${paperMode ? 'text-black' : 'text-white'}`}>
-          <img src="/assets/tenney-mark.svg" alt="Tenney" className="h-8 w-8" />
-          <span className="text-sm uppercase tracking-[0.2em]">Tenney</span>
-        </NavLink>
-        <nav className={`flex items-center gap-4 text-sm ${baseText}`}>
-          <NavLink className={`${hoverText} focus-visible:outline focus-visible:outline-2 ${ringColor} rounded`} to="/docs">Docs</NavLink>
-          <NavLink className={`${hoverText} focus-visible:outline focus-visible:outline-2 ${ringColor} rounded`} to="/nightly">Nightly</NavLink>
-          <div className="hidden md:block">
-            <AppStoreBadge variant={paperMode ? 'black' : 'white'} className="scale-75 origin-right" />
-          </div>
-          <a className={`md:hidden rounded-full border ${paperMode ? 'border-black/30 text-black' : 'border-white/30 text-white'} px-4 py-2 ${hoverText} focus-visible:outline focus-visible:outline-2 ${ringColor}`} href="#download">Download</a>
+        <div className="flex items-center gap-4">
+          <Link to="/" className="text-sm font-semibold tracking-[0.2em] text-white">
+            TENNEY
+          </Link>
+          <span className="hidden text-xs uppercase tracking-[0.3em] text-white/50 md:inline">
+            Stage Devices
+          </span>
+        </div>
+        <nav className="hidden items-center gap-6 text-xs uppercase tracking-[0.3em] text-white/70 md:flex">
+          <Link className="hover:text-white" to="/docs">
+            Docs
+          </Link>
+          <Link className="hover:text-white" to="/press">
+            Press
+          </Link>
+          <Link className="hover:text-white" to="/nightly">
+            Nightly
+          </Link>
+          <Link className="hover:text-white" to="/privacy">
+            Privacy
+          </Link>
         </nav>
+        <div className="hidden items-center gap-4 md:flex">
+          <a className="text-xs uppercase tracking-[0.3em] text-white/60 hover:text-white" href={NIGHTLY_URL}>
+            TestFlight
+          </a>
+          <AppStoreBadge variant="white" className="hidden xl:inline-flex" />
+        </div>
       </div>
     </header>
   );

@@ -1,21 +1,21 @@
-import { LiquidMetal } from '@paper-design/shaders-react';
+import { FlutedGlass } from '@paper-design/shaders-react';
 import { SHADER_DPR, SHADER_MAX_PIXELS, SHADER_SEED, SHADERS_ENABLED } from './shaderConfig';
 
-const LiquidMetalBackground = ({ className }: { className?: string }) => {
+const FlutedGlassOverlay = ({ className }: { className?: string }) => {
   if (!SHADERS_ENABLED) {
     return <div className={className} aria-hidden />;
   }
 
   return (
     <div className={className} aria-hidden>
-      <LiquidMetal
+      <FlutedGlass
         className="h-full w-full"
         colorBack="#0B0E14"
-        colorTint="#2B8CFF"
-        distortion={0.35}
-        contour={0.6}
-        repetition={5}
-        angle={35}
+        colorShadow="#0B0E14"
+        colorHighlight="#2B8CFF"
+        size={0.6}
+        distortion={0.4}
+        highlights={0.5}
         speed={0}
         frame={SHADER_SEED}
         minPixelRatio={SHADER_DPR}
@@ -25,4 +25,4 @@ const LiquidMetalBackground = ({ className }: { className?: string }) => {
   );
 };
 
-export default LiquidMetalBackground;
+export default FlutedGlassOverlay;

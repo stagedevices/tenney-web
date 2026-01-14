@@ -1,15 +1,16 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta http-equiv="refresh" content="0; url=/tenney-web/" />
     <script>
-      const path = location.pathname.replace('/tenney-web', '');
-      const search = location.search || '';
-      const hash = location.hash || '';
-      const redirect = '/tenney-web/?redirect=' + encodeURIComponent(path + search + hash);
-      location.replace(redirect);
+      const base = '/tenney-web';
+      const pathname = window.location.pathname.replace(base, '') || '/';
+      const redirect = `${pathname}${window.location.search}${window.location.hash}`;
+      const target = `${base}/?redirect=${encodeURIComponent(redirect)}`;
+      window.location.replace(target);
     </script>
+    <title>Tenney</title>
   </head>
   <body></body>
 </html>
