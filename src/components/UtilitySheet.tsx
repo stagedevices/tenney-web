@@ -12,7 +12,7 @@ const modes = [
 ] as const;
 
 const STAGE_DEVICES_LINK = "https://stagedevices.com";
-const TESTFLIGHT_LINK = "https://testflight.apple.com/join/mWAWKYHT";
+const IOS_TESTFLIGHT_LATEST = "https://testflight.apple.com/join/mWAWKYHT";
 
 interface UtilitySheetProps {
   open: boolean;
@@ -127,7 +127,7 @@ export default function UtilitySheet({ open, onClose, returnFocusRef }: UtilityS
                   as="a"
                   href={STAGE_DEVICES_LINK}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   size="sm"
                   variant="secondary"
                 >
@@ -135,13 +135,13 @@ export default function UtilitySheet({ open, onClose, returnFocusRef }: UtilityS
                 </TenneyButton>
                 <TenneyButton
                   as="a"
-                  href={TESTFLIGHT_LINK}
+                  href={IOS_TESTFLIGHT_LATEST}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   size="sm"
                   variant="primary"
                 >
-                  Join TestFlight
+                  Join Public Beta
                 </TenneyButton>
               </div>
             </div>

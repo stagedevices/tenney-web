@@ -121,11 +121,11 @@ export default function Home({ onStoryStateChange }: HomeProps) {
       {
         id: "beat-9",
         title: "Take Tenney on stage",
-        lede: "Download, join the beta, or run nightly builds—the full ecosystem is ready.",
+        lede: "Download, join the Public Beta (TestFlight), and explore the full ecosystem.",
         bullets: [
           "Ship-ready iOS release today.",
           "Opt into new tools before release.",
-          "Nightly builds for advanced workflows.",
+          "Preview builds delivered via Public Beta (TestFlight).",
         ],
         shotSrc: `${screenBase}/screen-08-stage-mode.png`,
         accent: "warm",
@@ -194,7 +194,7 @@ export default function Home({ onStoryStateChange }: HomeProps) {
             <div>
               <h3 className="text-2xl font-semibold">Ready to explore Tenney?</h3>
               <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                Install the app or join TestFlight for early access to new features.
+                Install the app or join the Public Beta (TestFlight) for early access to new features.
               </p>
             </div>
             <CTACluster />
