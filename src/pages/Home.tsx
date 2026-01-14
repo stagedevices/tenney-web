@@ -4,7 +4,7 @@ import StoryStage from "../components/StoryStage";
 import CTACluster from "../components/CTACluster";
 import { Beat } from "../components/BeatCard";
 
-const screenBase = "/tenney-web/assets/screens";
+const screenBase = "/assets/screens";
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement | null>(null);

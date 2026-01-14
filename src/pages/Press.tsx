@@ -1,12 +1,12 @@
 const screenshots = [
-  "/tenney-web/assets/screens/screen-01-lattice-overview.png",
-  "/tenney-web/assets/screens/screen-02-lattice-info-card.png",
-  "/tenney-web/assets/screens/screen-03-pads-builder-scope.png",
-  "/tenney-web/assets/screens/screen-04-scale-save-export.png",
-  "/tenney-web/assets/screens/screen-05-tuner-overview.png",
-  "/tenney-web/assets/screens/screen-06-tuner-locked.png",
-  "/tenney-web/assets/screens/screen-07-prime-overlays.png",
-  "/tenney-web/assets/screens/screen-08-stage-mode.png",
+  "/assets/screens/screen-01-lattice-overview.png",
+  "/assets/screens/screen-02-lattice-info-card.png",
+  "/assets/screens/screen-03-pads-builder-scope.png",
+  "/assets/screens/screen-04-scale-save-export.png",
+  "/assets/screens/screen-05-tuner-overview.png",
+  "/assets/screens/screen-06-tuner-locked.png",
+  "/assets/screens/screen-07-prime-overlays.png",
+  "/assets/screens/screen-08-stage-mode.png",
 ];
 
 export default function Press() {
@@ -24,7 +24,7 @@ export default function Press() {
           Download the primary icon asset.
         </p>
         <a
-          href="/tenney-web/assets/app-icon.png"
+          href="/assets/app-icon.png"
           className="mt-4 inline-block text-sm font-semibold text-tenney-blue"
         >
           Download icon →
