@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vitepress build docs --outDir dist/docs",
+    "docs:dev": "vitepress dev docs --host",
+    "docs:build": "vitepress build docs --outDir dist/docs",
     "preview": "vite preview",
     "postbuild": "node scripts/postbuild-ghpages.mjs"
   },
@@ -23,6 +25,7 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10"
+    "vite": "^5.2.10",
+    "vitepress": "^1.6.3"
   }
 }

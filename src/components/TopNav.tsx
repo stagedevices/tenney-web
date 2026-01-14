@@ -19,7 +19,7 @@ export default function TopNav() {
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           {[
             { to: "/", label: "Home" },
-            { to: "/docs", label: "Docs" },
+            { to: "/docs/", label: "Docs" },
             { to: "/beta", label: "Beta" },
             { to: "/press", label: "Press" },
             { to: "/privacy", label: "Privacy" },
