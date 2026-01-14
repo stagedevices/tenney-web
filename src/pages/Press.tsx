@@ -18,7 +18,7 @@ export default function Press() {
           Tenney is a harmonic exploration tool that renders pitch as a spatial lattice. Use the assets below for press coverage.
         </p>
       </header>
-      <section className="rounded-card border border-tenney-line bg-white/80 p-6 shadow-soft dark:bg-slate-950/60">
+      <section className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-6 shadow-soft dark:bg-slate-950/60">
         <h2 className="text-lg font-semibold">App icon</h2>
         <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">
           Download the primary icon asset.
@@ -36,7 +36,7 @@ export default function Press() {
           {screenshots.map((shot) => (
             <div
               key={shot}
-              className="rounded-card border border-tenney-line bg-white/70 p-4 shadow-soft dark:bg-slate-950/60"
+              className="tenney-plusgrid rounded-card border border-tenney-line bg-white/70 p-4 shadow-soft dark:bg-slate-950/60"
             >
               <img src={shot} alt="Tenney screenshot" className="w-full rounded-card object-contain" />
               <a

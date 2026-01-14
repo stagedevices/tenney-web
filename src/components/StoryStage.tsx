@@ -16,6 +16,7 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
   const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isActive, setIsActive] = useState(true);
+  const [completed, setCompleted] = useState(false);
   const wheelAccum = useRef(0);
   const lockRef = useRef(false);
   const touchStart = useRef<number | null>(null);
@@ -26,12 +27,17 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
   const activeBeat = useMemo(() => beats[activeIndex], [beats, activeIndex]);
 
   const exitStory = () => {
+    setCompleted(true);
     setIsActive(false);
+    wheelAccum.current = 0;
+    lockRef.current = false;
+    touchStart.current = null;
     unlockScroll();
     onExit();
   };
 
   const moveBeat = (direction: number) => {
+    if (completed) return;
     if (lockRef.current) return;
     const nextIndex = activeIndex + direction;
     if (nextIndex < 0) return;
@@ -49,22 +55,24 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
   useEffect(() => {
     if (reducedMotion) {
       setIsActive(false);
+      setCompleted(true);
       unlockScroll();
       return;
     }
-    if (isActive) {
+    if (isActive && !completed) {
       lockScroll();
       return () => unlockScroll();
     }
     unlockScroll();
     return undefined;
-  }, [isActive, reducedMotion]);
+  }, [completed, isActive, reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion) return;
-    if (!isActive) return;
+    if (!isActive || completed) return;
 
     const handleWheel = (event: WheelEvent) => {
+      if (!isActive || completed) return;
       event.preventDefault();
       wheelAccum.current += event.deltaY;
       if (Math.abs(wheelAccum.current) < WHEEL_THRESHOLD) return;
@@ -74,6 +82,7 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
     };
 
     const handleKey = (event: KeyboardEvent) => {
+      if (!isActive || completed) return;
       if (["ArrowDown", "PageDown"].includes(event.key)) {
         event.preventDefault();
         moveBeat(1);
@@ -89,10 +98,12 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
     };
 
     const handleTouchStart = (event: TouchEvent) => {
+      if (!isActive || completed) return;
       touchStart.current = event.touches[0]?.clientY ?? null;
     };
 
     const handleTouchMove = (event: TouchEvent) => {
+      if (!isActive || completed) return;
       if (touchStart.current === null) return;
       const currentY = event.touches[0]?.clientY ?? 0;
       const delta = touchStart.current - currentY;
@@ -113,7 +124,7 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [activeIndex, isActive, reducedMotion]);
+  }, [activeIndex, completed, isActive, reducedMotion]);
 
   useEffect(() => {
     if (!reducedMotion) return;

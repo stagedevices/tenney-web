@@ -14,7 +14,7 @@ export default function Docs() {
         ].map((item) => (
           <div
             key={item.title}
-            className="rounded-card border border-tenney-line bg-white/80 p-5 shadow-soft dark:bg-slate-950/60"
+            className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-5 shadow-soft dark:bg-slate-950/60"
           >
             <h3 className="text-base font-semibold">{item.title}</h3>
             <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">{item.description}</p>

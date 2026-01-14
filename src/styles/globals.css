@@ -73,6 +73,33 @@ body {
   height: 100vh;
 }
 
+.tenney-plusgrid {
+  position: relative;
+  overflow: hidden;
+}
+
+.tenney-plusgrid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M14 9v10M9 14h10' stroke='%230f172a' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 28px 28px;
+  background-repeat: repeat;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.dark .tenney-plusgrid::before {
+  opacity: 0.14;
+}
+
+.tenney-plusgrid > * {
+  position: relative;
+  z-index: 1;
+}
+
 .shimmer-highlight {
   background: radial-gradient(circle at var(--highlight-x, 50%) var(--highlight-y, 50%),
       rgba(255, 255, 255, 0.45),

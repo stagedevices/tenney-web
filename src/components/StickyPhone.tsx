@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { Beat } from "./BeatCard";
+import { useReducedMotion } from "../lib/reducedMotion";
 
 interface StickyPhoneProps {
   beats: Beat[];
@@ -10,6 +11,7 @@ interface StickyPhoneProps {
 export default function StickyPhone({ beats, activeIndex }: StickyPhoneProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [highlight, setHighlight] = useState({ x: 50, y: 30 });
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -50,10 +52,10 @@ export default function StickyPhone({ beats, activeIndex }: StickyPhoneProps) {
               alt={beat.title}
               loading={index < 2 ? "eager" : "lazy"}
               className="absolute inset-0 h-full w-full object-contain"
-              animate={{ opacity: index === activeIndex ? 1 : 0, scale: index === activeIndex ? 1 : 0.98 }}
-              transition={{ duration: 0.6 }}
+              animate={{ opacity: index === activeIndex ? 1 : 0 }}
+              transition={{ duration: reducedMotion ? 0 : 0.6 }}
               style={{
-                transformOrigin: "center",
+                clipPath: "inset(6% 0 0 0)",
               }}
             />
           ))}
