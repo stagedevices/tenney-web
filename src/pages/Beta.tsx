@@ -55,7 +55,8 @@ function BuildRow({ label, href, whatsNew }: BuildRowProps) {
 export default function Beta() {
   const { effectiveTheme } = useTheme();
   const badgeSrc = effectiveTheme === "dark" ? APP_STORE_BADGE_DARK : APP_STORE_BADGE_LIGHT;
-  const screenSrc = new URL("assets/screens/screen-01-lattice-overview.png", import.meta.env.BASE_URL).toString();
+  const baseUrl = import.meta.env.BASE_URL || "/";
+  const screenSrc = `${baseUrl}assets/screens/screen-01-lattice-overview.png`;
 
   return (
     <main className="relative tenney-pagegrid">
