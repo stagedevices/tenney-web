@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navH: 72px;
+}
+
+body {
+  font-family: "Inter", "SF Pro Text", system-ui, -apple-system, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.ambient-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(126, 245, 199, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(126, 245, 199, 0.1), transparent 60%),
+    radial-gradient(circle at 40% 80%, rgba(80, 140, 255, 0.12), transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05), transparent 50%),
+    linear-gradient(180deg, #0b0c12 0%, #0a0d14 60%, #0b0c12 100%);
+  animation: ambient-drift 30s ease-in-out infinite alternate;
+}
+
+.ambient-2026 {
+  position: absolute;
+  inset: 0;
+  font-size: clamp(8rem, 20vw, 18rem);
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: screen;
+  filter: blur(0.5px);
+}
+
+.ambient-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+@keyframes ambient-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-2%, 1%, 0) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-bg {
+    animation: none;
+  }
+}
