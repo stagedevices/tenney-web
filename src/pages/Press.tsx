@@ -15,7 +15,7 @@ const Press = () => (
       <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
         <h2 className="text-xl font-semibold text-white">Brand mark</h2>
         <div className="mt-4 flex h-32 items-center justify-center rounded-2xl border border-white/10 bg-black/30">
-          <SafeImage src="/public/assets/tenney-mark.svg" alt="Tenney mark" className="h-16" />
+          <SafeImage src="/assets/tenney-mark.svg" alt="Tenney mark" className="h-16" />
         </div>
         <a className="mt-4 inline-block text-xs uppercase tracking-[0.3em] text-white/70" href={PRESS_KIT_URL}>
           Download press kit

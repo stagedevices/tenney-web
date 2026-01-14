@@ -40,7 +40,7 @@ const HowItWorks = () => (
             <h3 className="mt-2 text-2xl font-semibold text-white">Build a system</h3>
           </div>
           <SafeImage
-            src="/public/assets/howitworks-lattice-master@2x.png"
+            src="/assets/howitworks-lattice-master@2x.png"
             alt="Lattice master"
             className="h-20 w-20 object-contain"
           />
@@ -72,7 +72,7 @@ const HowItWorks = () => (
             <h3 className="mt-2 text-2xl font-semibold text-white">Track in the moment</h3>
           </div>
           <SafeImage
-            src="/public/assets/howitworks-tuner-master@2x.png"
+            src="/assets/howitworks-tuner-master@2x.png"
             alt="Tuner master"
             className="h-20 w-20 object-contain"
           />
