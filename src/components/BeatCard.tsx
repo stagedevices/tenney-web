@@ -27,7 +27,7 @@ const accentStyles = {
 export default function BeatCard({ beat, index, total, active }: BeatCardProps) {
   return (
     <motion.div
-      className={`rounded-card border p-6 shadow-softer backdrop-blur-lg ${accentStyles[beat.accent]}`}
+      className={`tenney-plusgrid rounded-card border p-6 shadow-softer backdrop-blur-lg ${accentStyles[beat.accent]}`}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: active ? 1 : 0.45, y: active ? 0 : 10 }}
       transition={{ duration: 0.5 }}

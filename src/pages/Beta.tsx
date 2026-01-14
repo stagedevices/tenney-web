@@ -9,11 +9,11 @@ export default function Beta() {
           Get early access to upcoming Tenney features. Choose TestFlight for stability or nightly builds for the latest experiments.
         </p>
       </header>
-      <section className="rounded-card border border-tenney-line bg-white/80 p-8 shadow-soft dark:bg-slate-950/60">
+      <section className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-8 shadow-soft dark:bg-slate-950/60">
         <CTACluster />
       </section>
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-card border border-tenney-line bg-white/80 p-5 dark:bg-slate-950/60">
+        <div className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-5 dark:bg-slate-950/60">
           <h2 className="text-lg font-semibold">TestFlight Beta</h2>
           <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">
             Expect curated builds with release notes and milestone features.
@@ -25,7 +25,7 @@ export default function Beta() {
             Join the beta →
           </a>
         </div>
-        <div className="rounded-card border border-tenney-line bg-white/80 p-5 dark:bg-slate-950/60">
+        <div className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-5 dark:bg-slate-950/60">
           <h2 className="text-lg font-semibold">Nightly Builds</h2>
           <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">
             Grab the latest experimental build for feedback and testing.

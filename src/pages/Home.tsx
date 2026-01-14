@@ -150,7 +150,7 @@ export default function Home() {
         onExit={() => contentRef.current?.scrollIntoView({ behavior: "smooth" })}
       />
       <div ref={contentRef} className="mx-auto max-w-5xl space-y-16 px-6 py-16">
-        <section className="rounded-card border border-tenney-line bg-white/80 p-10 shadow-soft backdrop-blur-lg dark:bg-slate-900/70">
+        <section className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-10 shadow-soft backdrop-blur-lg dark:bg-slate-900/70">
           <h3 className="text-2xl font-semibold">Designed for the long rehearsal</h3>
           <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
             Tenney blends an editorial interface with a scientific core, keeping the lattice stable while
@@ -171,14 +171,14 @@ export default function Home() {
                 description: "Share scale libraries and lattice snapshots with ensembles.",
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-card border border-tenney-line bg-white/70 p-5 dark:bg-slate-950/60">
+              <div key={item.title} className="tenney-plusgrid rounded-card border border-tenney-line bg-white/70 p-5 dark:bg-slate-950/60">
                 <h4 className="text-sm font-semibold">{item.title}</h4>
                 <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">{item.description}</p>
               </div>
             ))}
           </div>
         </section>
-        <section className="rounded-card border border-tenney-line bg-white/80 p-10 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
+        <section className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-10 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="text-2xl font-semibold">Ready to explore Tenney?</h3>
