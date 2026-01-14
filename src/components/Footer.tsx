@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "../lib/theme";
-import { APP_STORE_BADGE_DARK, APP_STORE_BADGE_LIGHT, APP_STORE_LINK, BETA_LINK } from "./CTACluster";
+import { APP_STORE_BADGE_DARK, APP_STORE_BADGE_LIGHT, APP_STORE_LINK, IOS_TESTFLIGHT_LATEST } from "./CTACluster";
 import TenneyButton from "./TenneyButton";
 
 const baseUrl = import.meta.env.BASE_URL || "/";
@@ -22,15 +22,22 @@ export default function Footer() {
             <div>
               <h3 className="text-2xl font-semibold">Keep Tenney within reach.</h3>
               <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                Install the app or join TestFlight to experience the newest stage-ready builds.
+                Install the app or join the Public Beta (TestFlight) to experience the newest stage-ready builds.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a href={APP_STORE_LINK} target="_blank" rel="noreferrer">
+              <a href={APP_STORE_LINK} target="_blank" rel="noreferrer noopener">
                 <img src={badgeSrc} alt="Download on the App Store" className="h-12" />
               </a>
-              <TenneyButton as="a" href={BETA_LINK} target="_blank" rel="noreferrer" size="sm" variant="primary">
-                Join TestFlight Beta
+              <TenneyButton
+                as="a"
+                href={IOS_TESTFLIGHT_LATEST}
+                target="_blank"
+                rel="noreferrer noopener"
+                size="sm"
+                variant="primary"
+              >
+                Join Public Beta
               </TenneyButton>
             </div>
           </div>
@@ -57,7 +64,7 @@ export default function Footer() {
                   className="transition hover:text-slate-900 dark:hover:text-white"
                   href={STAGE_DEVICES_LINK}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                 >
                   Stage Devices
                 </a>

@@ -17,7 +17,7 @@ const baseUrl = import.meta.env.BASE_URL || "/";
 const docsHref = `${baseUrl}docs/`;
 
 const STAGE_DEVICES_LINK = "https://stagedevices.com";
-const TESTFLIGHT_LINK = "https://testflight.apple.com/join/mWAWKYHT";
+const IOS_TESTFLIGHT_LATEST = "https://testflight.apple.com/join/mWAWKYHT";
 
 export default function Header({ storyBeatIndex = 0, storyActive = false }: HeaderProps) {
   const location = useLocation();
@@ -144,18 +144,18 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
                 <a
                   href={STAGE_DEVICES_LINK}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   className="text-xs font-medium text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                 >
                   Stage Devices
                 </a>
                 <a
-                  href={TESTFLIGHT_LINK}
+                  href={IOS_TESTFLIGHT_LATEST}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
                   className="text-xs font-medium text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                 >
-                  Join TestFlight
+                  Join Public Beta
                 </a>
                 <div className="glass-pill flex rounded-pill p-1 text-[11px] text-slate-700 dark:text-slate-200">
                   {[
