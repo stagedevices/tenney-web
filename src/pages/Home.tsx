@@ -6,7 +6,11 @@ import { Beat } from "../components/BeatCard";
 
 const screenBase = "/tenney-web/assets/screens";
 
-export default function Home() {
+interface HomeProps {
+  onStoryStateChange?: (state: { beatIndex: number; isActive: boolean }) => void;
+}
+
+export default function Home({ onStoryStateChange }: HomeProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   const beats = useMemo<Beat[]>(
@@ -142,12 +146,19 @@ export default function Home() {
     });
   }, []);
 
+  useEffect(() => {
+    return () => {
+      onStoryStateChange?.({ beatIndex: 0, isActive: false });
+    };
+  }, [onStoryStateChange]);
+
   return (
     <main className="relative tenney-pagegrid">
       <BackgroundField />
       <StoryStage
         beats={beats}
         onExit={() => contentRef.current?.scrollIntoView({ behavior: "smooth" })}
+        onStoryStateChange={onStoryStateChange}
       />
       <div ref={contentRef} className="mx-auto max-w-5xl space-y-16 px-6 py-16">
         <section className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-10 shadow-soft backdrop-blur-lg dark:bg-slate-900/70">
@@ -183,15 +194,12 @@ export default function Home() {
             <div>
               <h3 className="text-2xl font-semibold">Ready to explore Tenney?</h3>
               <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                Install the app, join TestFlight, or try nightly builds for early features.
+                Install the app or join TestFlight for early access to new features.
               </p>
             </div>
             <CTACluster />
           </div>
         </section>
-        <footer className="text-xs text-slate-500 dark:text-slate-400">
-          © 2025 Tenney Devices. Crafted for harmonic explorers.
-        </footer>
       </div>
     </main>
   );

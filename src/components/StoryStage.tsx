@@ -7,12 +7,13 @@ import { useReducedMotion } from "../lib/reducedMotion";
 interface StoryStageProps {
   beats: Beat[];
   onExit: () => void;
+  onStoryStateChange?: (state: { beatIndex: number; isActive: boolean }) => void;
 }
 
 const WHEEL_THRESHOLD = 80;
 const LOCK_DURATION = 700;
 
-export default function StoryStage({ beats, onExit }: StoryStageProps) {
+export default function StoryStage({ beats, onExit, onStoryStateChange }: StoryStageProps) {
   const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isActive, setIsActive] = useState(true);
@@ -144,6 +145,10 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [reducedMotion]);
+
+  useEffect(() => {
+    onStoryStateChange?.({ beatIndex: activeIndex, isActive });
+  }, [activeIndex, isActive, onStoryStateChange]);
 
   useEffect(() => {
     if (reducedMotion) return;
