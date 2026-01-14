@@ -12,5 +12,5 @@ Place updated image exports in `public/assets/` using the exact filenames below 
 - `hero-module-library@2x.png`
 - `howitworks-lattice-master@2x.png`
 - `howitworks-tuner-master@2x.png`
-- `tenney-mark.svg`
+- `tenney-mark.png`
 - `app-icon.png`
