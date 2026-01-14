@@ -13,12 +13,7 @@ optimizations.
 Prototype a tuning with 5–7 nodes before expanding, so you can verify stability early.
 :::
 
-## <span class="docs-section-title">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 4.5h9m-9 7.5h9m-9 7.5h9M4.5 4.5v15m15-15v15" />
-  </svg>
-  Data model
-</span>
+## <span class="docs-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 4.5h9m-9 7.5h9m-9 7.5h9M4.5 4.5v15m15-15v15" /></svg> Data model</span>
 
 Tenney stores each node as a ratio plus lattice coordinates, so scales can be rebuilt in any octave.
 
@@ -26,12 +21,7 @@ Tenney stores each node as a ratio plus lattice coordinates, so scales can be re
 The data layer clamps extreme ratios to protect the tuner from unstable ranges.
 :::
 
-## <span class="docs-section-title">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-  </svg>
-  Performance notes
-</span>
+## <span class="docs-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" /></svg> Performance notes</span>
 
 Keep lattices shallow during live sets; large jumps can destabilize monitoring for the ensemble.
 
