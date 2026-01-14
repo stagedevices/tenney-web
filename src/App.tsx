@@ -2,7 +2,7 @@ import { MotionConfig } from "framer-motion";
 import { Route, Routes } from "react-router-dom";
 import TopNav from "./components/TopNav";
 import Home from "./pages/Home";
-import Docs from "./pages/Docs";
+import DocsRedirect from "./pages/DocsRedirect";
 import Beta from "./pages/Beta";
 import Press from "./pages/Press";
 import Privacy from "./pages/Privacy";
@@ -16,7 +16,7 @@ export default function App() {
         <TopNav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/docs" element={<Docs />} />
+          <Route path="/docs/*" element={<DocsRedirect />} />
           <Route path="/beta" element={<Beta />} />
           <Route path="/press" element={<Press />} />
           <Route path="/privacy" element={<Privacy />} />
