@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+  --tenney-bg: #f5f5f5;
+  --tenney-cyan: #05dbfe;
+  --tenney-blue: #029cfe;
+  --tenney-orange: #ff7500;
+  --tenney-amber: #fe9b00;
+  --tenney-yellow: #fee104;
+  --tenney-line: #d6d6d6;
+}
+
+.dark {
+  --tenney-bg: #0b0c0f;
+  --tenney-cyan: #05dbfe;
+  --tenney-blue: #1aa3ff;
+  --tenney-orange: #ff7b2f;
+  --tenney-amber: #f9a54b;
+  --tenney-yellow: #ffe45b;
+  --tenney-line: #2a2d35;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", system-ui,
+    sans-serif;
+  background: var(--tenney-bg);
+  min-height: 100vh;
+}
+
+.glass-pill {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.35));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 30px rgba(10, 20, 35, 0.12);
+}
+
+.dark .glass-pill {
+  background: linear-gradient(135deg, rgba(17, 20, 28, 0.7), rgba(17, 20, 28, 0.25));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px rgba(5, 8, 18, 0.6);
+}
+
+.lattice-fallback {
+  background: radial-gradient(circle at top right, rgba(5, 219, 254, 0.14), transparent 55%),
+    radial-gradient(circle at 20% 20%, rgba(2, 156, 254, 0.12), transparent 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(245, 245, 245, 0.9));
+}
+
+.dark .lattice-fallback {
+  background: radial-gradient(circle at 20% 20%, rgba(5, 219, 254, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(2, 156, 254, 0.2), transparent 60%),
+    linear-gradient(180deg, rgba(6, 8, 14, 0.95), rgba(12, 13, 20, 0.9));
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.story-locked {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.story-viewport {
+  height: 100vh;
+}
+
+.shimmer-highlight {
+  background: radial-gradient(circle at var(--highlight-x, 50%) var(--highlight-y, 50%),
+      rgba(255, 255, 255, 0.45),
+      transparent 55%);
+  mix-blend-mode: screen;
+}
+
+.dark .shimmer-highlight {
+  background: radial-gradient(circle at var(--highlight-x, 50%) var(--highlight-y, 50%),
+      rgba(5, 219, 254, 0.35),
+      transparent 60%);
+}
