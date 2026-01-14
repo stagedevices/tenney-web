@@ -9,8 +9,8 @@
           mapping, and performance-ready exports. Each guide is short, visual, and ready for live-use prep.
         </p>
         <div class="docs-hero__actions">
-          <a class="docs-cta docs-cta--primary" :href="BETA_URL" target="_blank" rel="noreferrer">Join Beta</a>
-          <a class="docs-cta docs-cta--secondary" href="/tenney-web/beta">Open Beta page</a>
+          <a class="tenney-btn tenney-btn--primary" :href="BETA_URL" target="_blank" rel="noreferrer">Join Beta</a>
+          <a class="tenney-btn tenney-btn--secondary" href="/tenney-web/beta">Open Beta page</a>
           <a class="docs-hero__press" href="/tenney-web/press">Press kit →</a>
         </div>
       </div>
@@ -31,9 +31,9 @@
             Launch the beta, tune your first lattice, and share a scale in under five minutes.
           </p>
           <div class="docs-card__links">
-            <a :href="links.firstFive">First 5 minutes</a>
-            <a :href="links.audioInput">Audio input</a>
-            <a :href="links.gettingStarted">Overview</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.firstFive">First 5 minutes</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.audioInput">Audio input</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.gettingStarted">Overview</a>
           </div>
         </article>
 
@@ -51,9 +51,9 @@
             Translate ratios into musical intention with a quick primer on JI intervals and stability.
           </p>
           <div class="docs-card__links">
-            <a :href="links.ratiosIntervals">Ratios and intervals</a>
-            <a :href="links.temperamentVsJi">Temperament vs JI</a>
-            <a :href="links.jiPrimer">Overview</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.ratiosIntervals">Ratios and intervals</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.temperamentVsJi">Temperament vs JI</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.jiPrimer">Overview</a>
           </div>
         </article>
 
@@ -71,9 +71,9 @@
             Understand axis weights, harmonic neighborhoods, and the tuner overlay that keeps you honest.
           </p>
           <div class="docs-card__links">
-            <a :href="links.latticeNavigation">Lattice navigation</a>
-            <a :href="links.labelingHeji">Labeling HEJI ratios</a>
-            <a :href="links.latticeTuner">Overview</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.latticeNavigation">Lattice navigation</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.labelingHeji">Labeling HEJI ratios</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.latticeTuner">Overview</a>
           </div>
         </article>
 
@@ -92,9 +92,9 @@
             Capture presets for performance rigs, collaboration, and archival research.
           </p>
           <div class="docs-card__links">
-            <a :href="links.savingScales">Saving scales</a>
-            <a :href="links.exportFormats">Export formats</a>
-            <a :href="links.export">Overview</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.savingScales">Saving scales</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.exportFormats">Export formats</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.export">Overview</a>
           </div>
         </article>
 
@@ -109,9 +109,9 @@
             Build a run-of-show that keeps timing tight and your harmonics resilient.
           </p>
           <div class="docs-card__links">
-            <a :href="links.timingLock">Timing and lock</a>
-            <a :href="links.performanceChecklist">Performance checklist</a>
-            <a :href="links.stageWorkflow">Overview</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.timingLock">Timing and lock</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.performanceChecklist">Performance checklist</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.stageWorkflow">Overview</a>
           </div>
         </article>
 
@@ -129,9 +129,9 @@
             Dig into tuning math, data models, and performance hints hidden in the advanced layer.
           </p>
           <div class="docs-card__links">
-            <a :href="links.underTheHood">Under the hood</a>
-            <a :href="links.troubleshooting">Troubleshooting</a>
-            <a :href="links.advanced">Overview</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.underTheHood">Under the hood</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.troubleshooting">Troubleshooting</a>
+            <a class="tenney-btn tenney-btn--secondary tenney-btn--sm" :href="links.advanced">Overview</a>
           </div>
         </article>
       </div>

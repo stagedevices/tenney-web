@@ -1,4 +1,5 @@
 import { useTheme } from "../lib/theme";
+import TenneyButton from "./TenneyButton";
 
 const APP_STORE_LINK =
   "https://apps.apple.com/us/app/tenney/id6753315813?itscg=30200&itsct=apps_box_badge&mttnsubad=6753315813";
@@ -25,22 +26,18 @@ export default function CTACluster() {
         <img src={badgeSrc} alt="Download on the App Store" className="h-12" />
       </a>
       <div className="flex flex-wrap gap-3">
-        <a
-          href={BETA_LINK}
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-button bg-tenney-blue px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:opacity-90"
-        >
+        <TenneyButton as="a" href={BETA_LINK} target="_blank" rel="noreferrer">
           Join TestFlight Beta
-        </a>
-        <a
+        </TenneyButton>
+        <TenneyButton
+          as="a"
           href={NIGHTLY_LINK}
           target="_blank"
           rel="noreferrer"
-          className="rounded-button border border-tenney-line px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-tenney-blue hover:text-tenney-blue dark:text-slate-200"
+          variant="secondary"
         >
           Nightly Builds
-        </a>
+        </TenneyButton>
       </div>
     </div>
   );
