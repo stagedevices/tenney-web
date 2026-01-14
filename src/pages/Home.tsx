@@ -1,4 +1,4 @@
-import StackLiftStage from '../sections/home/StackLiftStage';
+import ShaderNarrativeHero from '../sections/home/ShaderNarrativeHero';
 import HowItWorks from '../sections/home/HowItWorks';
 import WhyTenney from '../sections/home/WhyTenney';
 import FeatureBentoLattice from '../sections/home/FeatureBentoLattice';
@@ -7,7 +7,7 @@ import DocsCommunity from '../sections/home/DocsCommunity';
 
 const Home = () => (
   <div>
-    <StackLiftStage />
+    <ShaderNarrativeHero />
     <HowItWorks />
     <WhyTenney />
     <FeatureBentoLattice />
