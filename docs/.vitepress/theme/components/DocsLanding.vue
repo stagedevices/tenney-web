@@ -9,8 +9,17 @@
           mapping, and performance-ready exports. Each guide is short, visual, and ready for live-use prep.
         </p>
         <div class="docs-hero__actions">
-          <a class="docs-cta docs-cta--primary" :href="BETA_URL" target="_blank" rel="noreferrer">Join Beta</a>
-          <a class="docs-cta docs-cta--secondary" href="/tenney-web/beta">Open Beta page</a>
+          <a
+            class="tenney-btn tenney-btn--primary tenney-btn--md"
+            :href="BETA_URL"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Join Beta
+          </a>
+          <a class="tenney-btn tenney-btn--secondary tenney-btn--warm tenney-btn--md" href="/tenney-web/beta">
+            Open Beta page
+          </a>
           <a class="docs-hero__press" href="/tenney-web/press">Press kit →</a>
         </div>
       </div>

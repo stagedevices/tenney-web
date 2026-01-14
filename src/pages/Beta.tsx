@@ -1,4 +1,5 @@
 import CTACluster, { betaLinks } from "../components/CTACluster";
+import TenneyButton from "../components/TenneyButton";
 
 export default function Beta() {
   return (
@@ -18,24 +19,31 @@ export default function Beta() {
           <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">
             Expect curated builds with release notes and milestone features.
           </p>
-          <a
+          <TenneyButton
             href={betaLinks.beta}
-            className="mt-4 inline-block text-sm font-semibold text-tenney-blue"
+            as="a"
+            size="sm"
+            variant="primary"
+            className="mt-4"
           >
             Join the beta →
-          </a>
+          </TenneyButton>
         </div>
         <div className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-5 dark:bg-slate-950/60">
           <h2 className="text-lg font-semibold">Nightly Builds</h2>
           <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">
             Grab the latest experimental build for feedback and testing.
           </p>
-          <a
+          <TenneyButton
             href={betaLinks.nightly}
-            className="mt-4 inline-block text-sm font-semibold text-tenney-blue"
+            as="a"
+            size="sm"
+            variant="secondary"
+            tone="warm"
+            className="mt-4"
           >
             Download nightly →
-          </a>
+          </TenneyButton>
         </div>
       </section>
     </main>
