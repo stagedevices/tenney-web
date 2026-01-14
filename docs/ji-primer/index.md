@@ -1,3 +1,7 @@
+---
+title: Just Intonation primer
+---
+
 # Just Intonation primer
 
 Just intonation keeps intervals anchored to pure ratios, helping ensemble tuning feel settled and repeatable.
