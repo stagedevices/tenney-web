@@ -53,6 +53,39 @@
   border-radius: 10px;
 }
 
+.docs-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--vp-c-text-2);
+  margin: 1rem 0 0.5rem;
+}
+
+.docs-breadcrumbs__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.docs-breadcrumbs__link:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.docs-breadcrumbs__sep {
+  opacity: 0.6;
+}
+
+.docs-breadcrumbs__current {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+.docs-landing {
+  padding-bottom: 2rem;
+  border-radius: 20px;
+}
+
 .tenney-pagegrid {
   position: relative;
   background-color: var(--tenney-bg);
