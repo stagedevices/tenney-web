@@ -1,16 +1,22 @@
-import { motion, useMotionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import AppStoreBadge from '../../components/AppStoreBadge';
 import ParallaxLayer from '../../components/ParallaxLayer';
 import SafeImage from '../../components/SafeImage';
 import { NIGHTLY_URL } from '../../config';
 import LiquidMetalBackground from '../../shaders/LiquidMetalBackground';
+import type { LiquidMetalControls } from '../../shaders/LiquidMetalBackground';
+import { samplePreset } from '../../shaders/liquidMetalPresets';
 import { assetUrl } from '../../utils/assets';
+
+const HERO_SCROLL_VH = 640;
+const CTA_ANCHOR_VH = Math.round(HERO_SCROLL_VH * 0.8);
 
 const ShaderNarrativeHero = () => {
   const shouldReduceMotion = useReducedMotion();
   const reducedMotion = !!shouldReduceMotion;
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const controlsRef = useRef<LiquidMetalControls>(samplePreset(0));
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ['start start', 'end start'],
@@ -19,23 +25,9 @@ const ShaderNarrativeHero = () => {
   const reducedProgress = useMotionValue(0);
   const progress = reducedMotion ? reducedProgress : scrollYProgress;
 
-  const hue = useTransform(progress, [0, 0.35, 0.7, 1], [210, 210, 28, 210]);
-  const energy = useTransform(progress, [0, 0.25, 0.6, 0.85, 1], [0.15, 0.35, 0.75, 0.45, 0.2]);
-  const hueRotateDeg = useTransform(hue, (value) => value - 210);
-  const saturate = useTransform(energy, (value) => 1 + value * 0.8);
-  const contrast = useTransform(energy, (value) => 1 + value * 0.28);
-  const brightness = useTransform(energy, (value) => 0.92 + value * 0.1);
-  const filterString = useTransform(
-    [hueRotateDeg, saturate, contrast, brightness],
-    (values) => {
-      const [nextHueRotate, nextSaturate, nextContrast, nextBrightness] = values as number[];
-      return `hue-rotate(${nextHueRotate.toFixed(1)}deg) saturate(${nextSaturate.toFixed(
-        2
-      )}) contrast(${nextContrast.toFixed(2)}) brightness(${nextBrightness.toFixed(2)})`;
-    }
-  );
-
-  const orangeWashOpacity = useTransform(progress, [0.6, 0.78, 0.9], [0, 0.22, 0]);
+  const warmBloomOpacity = reducedMotion
+    ? useMotionValue(0)
+    : useTransform(progress, [0.58, 0.7, 0.86], [0, 0.16, 0]);
 
   const deviceY = reducedMotion ? useMotionValue(0) : useTransform(progress, [0, 0.5, 1], [6, -6, 4]);
   const deviceScale = reducedMotion ? useMotionValue(1) : useTransform(progress, [0, 0.5, 1], [1, 1.015, 1]);
@@ -54,17 +46,37 @@ const ShaderNarrativeHero = () => {
 
   const introInitial = reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18 };
 
+  useAnimationFrame(() => {
+    if (reducedMotion) {
+      return;
+    }
+
+    const t = progress.get();
+    const nextControls = samplePreset(t);
+    Object.assign(controlsRef.current, nextControls);
+  });
+
   return (
-    <section ref={wrapperRef} className="relative h-[320vh]">
-      <div id="cta" className="pointer-events-none absolute top-[260vh] h-px w-px" aria-hidden="true" />
+    <section ref={wrapperRef} className="relative" style={{ height: `${HERO_SCROLL_VH}vh` }}>
+      <div
+        id="cta"
+        className="pointer-events-none absolute h-px w-px"
+        style={{ top: `${CTA_ANCHOR_VH}vh` }}
+        aria-hidden="true"
+      />
       <div className="sticky top-0 h-screen">
         <div className="relative h-full overflow-hidden">
-          <motion.div className="pointer-events-none absolute inset-0" style={{ filter: filterString }}>
-            <LiquidMetalBackground className="pointer-events-none absolute inset-0" />
-          </motion.div>
+          <LiquidMetalBackground
+            className="pointer-events-none absolute inset-0"
+            controls={reducedMotion ? undefined : controlsRef.current}
+          />
           <motion.div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(255,140,60,0.18),transparent_55%)]"
-            style={{ opacity: orangeWashOpacity }}
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_42%,rgba(255,150,90,0.18),transparent_56%)]"
+            style={{
+              opacity: warmBloomOpacity,
+              maskImage: 'linear-gradient(90deg, transparent 0%, transparent 38%, black 58%, black 100%)',
+              WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, transparent 38%, black 58%, black 100%)',
+            }}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/75 via-black/45 to-black/80" />
           <div className="relative z-10 flex h-full items-center">
