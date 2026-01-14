@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=/tenney-web/" />
+    <script>
+      const path = location.pathname.replace('/tenney-web', '');
+      const search = location.search || '';
+      const hash = location.hash || '';
+      const redirect = '/tenney-web/?redirect=' + encodeURIComponent(path + search + hash);
+      location.replace(redirect);
+    </script>
+  </head>
+  <body></body>
+</html>
