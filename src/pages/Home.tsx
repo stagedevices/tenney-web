@@ -143,7 +143,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative">
+    <main className="relative tenney-pagegrid">
       <BackgroundField />
       <StoryStage
         beats={beats}
