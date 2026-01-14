@@ -8,6 +8,7 @@ import LiquidMetalBackground from '../../shaders/LiquidMetalBackground';
 import AppStoreBadge from '../../components/AppStoreBadge';
 import SafeImage from '../../components/SafeImage';
 import { NIGHTLY_URL } from '../../config';
+import { assetUrl } from '../../utils/assets';
 
 const specChips = [
   'Phase-slope refinement',
@@ -90,17 +91,17 @@ const StackLiftStage = () => {
                   <ParallaxLayer className="relative">
                     <div className="relative">
                       <SafeImage
-                        src="/assets/hero-device-ipad@2x.png"
+                        src={assetUrl('assets/hero-device-ipad@2x.png')}
                         alt="Tenney on iPad"
                         className="w-[420px] max-w-full drop-shadow-[0_40px_80px_rgba(0,0,0,0.55)]"
                       />
                       <SafeImage
-                        src="/assets/hero-device-iphone@2x.png"
+                        src={assetUrl('assets/hero-device-iphone@2x.png')}
                         alt="Tenney on iPhone"
                         className="absolute -left-20 bottom-8 w-[180px] max-w-full drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]"
                       />
                       <SafeImage
-                        src="/assets/hero-device-macos@2x.png"
+                        src={assetUrl('assets/hero-device-macos@2x.png')}
                         alt="Tenney on macOS"
                         className="absolute -right-10 top-4 w-[160px] max-w-full opacity-80 drop-shadow-[0_20px_50px_rgba(0,0,0,0.55)]"
                       />
@@ -109,7 +110,7 @@ const StackLiftStage = () => {
                 </div>
                 <ParallaxLayer strength={20}>
                   <div className="flex h-28 w-28 items-center justify-center rounded-[28px] bg-white/10 shadow-[0_0_40px_rgba(43,140,255,0.45)] backdrop-blur">
-                    <SafeImage src="/assets/app-icon.png" alt="Tenney app icon" className="h-20 w-20" />
+                    <SafeImage src={assetUrl('assets/app-icon.png')} alt="Tenney app icon" className="h-20 w-20" />
                   </div>
                 </ParallaxLayer>
               </div>
@@ -148,7 +149,7 @@ const StackLiftStage = () => {
                   </div>
                 </div>
                 <SafeImage
-                  src="/assets/hero-module-lattice@2x.png"
+                  src={assetUrl('assets/hero-module-lattice@2x.png')}
                   alt="Lattice module"
                   className="h-24 w-24 object-contain"
                 />
@@ -203,7 +204,7 @@ const StackLiftStage = () => {
                   </div>
                 </div>
                 <SafeImage
-                  src="/assets/hero-module-library@2x.png"
+                  src={assetUrl('assets/hero-module-library@2x.png')}
                   alt="Library module"
                   className="h-24 w-24 object-contain"
                 />
@@ -245,7 +246,7 @@ const StackLiftStage = () => {
                   <p className="mt-2 text-sm text-white/60">Tap + hold to lock.</p>
                 </div>
                 <SafeImage
-                  src="/assets/hero-module-tuner@2x.png"
+                  src={assetUrl('assets/hero-module-tuner@2x.png')}
                   alt="Tuner module"
                   className="h-24 w-24 object-contain"
                 />
