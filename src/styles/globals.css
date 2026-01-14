@@ -11,6 +11,9 @@
   --tenney-amber: #fe9b00;
   --tenney-yellow: #fee104;
   --tenney-line: #d6d6d6;
+  --tenney-pagegrid-line: rgba(15, 23, 42, 0.06);
+  --tenney-pagegrid-line-strong: rgba(15, 23, 42, 0.1);
+  --tenney-pagegrid-sheen: rgba(2, 156, 254, 0.08);
 }
 
 .dark {
@@ -21,6 +24,9 @@
   --tenney-amber: #f9a54b;
   --tenney-yellow: #ffe45b;
   --tenney-line: #2a2d35;
+  --tenney-pagegrid-line: rgba(148, 163, 184, 0.1);
+  --tenney-pagegrid-line-strong: rgba(148, 163, 184, 0.16);
+  --tenney-pagegrid-sheen: rgba(5, 219, 254, 0.1);
 }
 
 body {
@@ -71,6 +77,99 @@ body {
 
 .story-viewport {
   height: 100vh;
+}
+
+.tenney-pagegrid {
+  position: relative;
+  background-color: var(--tenney-bg);
+}
+
+.tenney-pagegrid::before,
+.tenney-pagegrid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tenney-pagegrid::before {
+  background-image:
+    linear-gradient(var(--tenney-pagegrid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--tenney-pagegrid-line) 1px, transparent 1px),
+    linear-gradient(var(--tenney-pagegrid-line-strong) 1px, transparent 1px),
+    linear-gradient(90deg, var(--tenney-pagegrid-line-strong) 1px, transparent 1px);
+  background-size: 56px 56px, 56px 56px, 280px 280px, 280px 280px;
+  opacity: 0.7;
+  animation: gridDrift 26s linear infinite;
+}
+
+.tenney-pagegrid::after {
+  background-image: radial-gradient(circle at 20% 30%, var(--tenney-pagegrid-sheen), transparent 55%),
+    radial-gradient(circle at 80% 70%, var(--tenney-pagegrid-sheen), transparent 50%);
+  opacity: 0.35;
+  background-size: 160% 160%;
+  animation: sheenDrift 30s linear infinite;
+}
+
+.tenney-pagegrid > * {
+  position: relative;
+  z-index: 1;
+}
+
+.tenney-beatcard {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .tenney-beatcard {
+    height: 460px;
+    min-height: 460px;
+  }
+}
+
+.tenney-beatcard-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.tenney-beatcard-scroll {
+  max-height: 100%;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.tenney-screen-specular {
+  background: radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.35), transparent 45%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 50%);
+  mix-blend-mode: screen;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.dark .tenney-screen-specular {
+  background: radial-gradient(circle at 30% 10%, rgba(5, 219, 254, 0.25), transparent 45%),
+    linear-gradient(135deg, rgba(5, 219, 254, 0.08), transparent 55%);
+  opacity: 0.35;
+}
+
+@keyframes gridDrift {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 120px 120px, 120px 120px, -200px -200px, -200px -200px;
+  }
+}
+
+@keyframes sheenDrift {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
 }
 
 .tenney-plusgrid {

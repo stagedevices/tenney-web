@@ -21,28 +21,35 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
   const lockRef = useRef(false);
   const touchStart = useRef<number | null>(null);
   const observerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const endSentinelRef = useRef<HTMLDivElement | null>(null);
+  const lastScrollY = useRef(0);
+  const scrollDirection = useRef<"up" | "down">("down");
 
   const total = beats.length;
 
   const activeBeat = useMemo(() => beats[activeIndex], [beats, activeIndex]);
 
-  const exitStory = () => {
-    setCompleted(true);
+  const releaseStory = ({ didComplete, shouldScroll }: { didComplete: boolean; shouldScroll: boolean }) => {
+    setCompleted(didComplete);
     setIsActive(false);
     wheelAccum.current = 0;
     lockRef.current = false;
     touchStart.current = null;
     unlockScroll();
-    onExit();
+    if (shouldScroll) {
+      onExit();
+    }
   };
 
   const moveBeat = (direction: number) => {
-    if (completed) return;
     if (lockRef.current) return;
     const nextIndex = activeIndex + direction;
-    if (nextIndex < 0) return;
+    if (nextIndex < 0) {
+      releaseStory({ didComplete: false, shouldScroll: false });
+      return;
+    }
     if (nextIndex >= total) {
-      exitStory();
+      releaseStory({ didComplete: true, shouldScroll: true });
       return;
     }
     lockRef.current = true;
@@ -93,7 +100,7 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
       }
       if (event.key === "Escape") {
         event.preventDefault();
-        exitStory();
+        releaseStory({ didComplete: false, shouldScroll: false });
       }
     };
 
@@ -125,6 +132,42 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
       window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [activeIndex, completed, isActive, reducedMotion]);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    lastScrollY.current = window.scrollY;
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      scrollDirection.current = currentY < lastScrollY.current ? "up" : "down";
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    const sentinel = endSentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          if (scrollDirection.current !== "up") return;
+          if (isActive) return;
+          setCompleted(false);
+          setActiveIndex(total - 1);
+          setIsActive(true);
+          wheelAccum.current = 0;
+          lockRef.current = false;
+          touchStart.current = null;
+        });
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [isActive, reducedMotion, total]);
 
   useEffect(() => {
     if (!reducedMotion) return;
@@ -171,25 +214,28 @@ export default function StoryStage({ beats, onExit }: StoryStageProps) {
   }
 
   return (
-    <section className={`story-viewport ${isActive ? "story-locked" : ""} relative`}>
-      <div className="mx-auto flex h-full max-w-6xl items-center gap-10 px-6">
-        <div className="w-full md:w-1/2">
+    <>
+      <section className={`story-viewport ${isActive ? "story-locked" : ""} relative`}>
+        <div className="mx-auto grid h-full max-w-6xl items-center gap-10 px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <div className="flex w-full flex-col items-start justify-center">
           <BeatCard beat={activeBeat} index={activeIndex} total={total} active={isActive} />
           <div className="mt-4 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <span>Scroll to explore</span>
             <button
               type="button"
-              onClick={exitStory}
+              onClick={() => releaseStory({ didComplete: false, shouldScroll: false })}
               className="rounded-pill border border-tenney-line px-3 py-1 text-xs font-semibold uppercase tracking-widest"
             >
               Skip
             </button>
           </div>
+          </div>
+          <div className="hidden w-full items-center justify-center md:flex">
+            <StickyPhone beats={beats} activeIndex={activeIndex} />
+          </div>
         </div>
-        <div className="hidden w-1/2 md:block">
-          <StickyPhone beats={beats} activeIndex={activeIndex} />
-        </div>
-      </div>
-    </section>
+      </section>
+      <div ref={endSentinelRef} className="h-1 w-full" aria-hidden />
+    </>
   );
 }
