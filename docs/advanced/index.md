@@ -1,33 +1,25 @@
+---
+title: Advanced overview
+---
+
 # Advanced / under the hood
 
-When you need to customize Tenney beyond presets, start here. These notes cover data models, tuning math, and performance
-optimizations.
+When you’re ready to go deeper, Tenney exposes tuning math, storage internals, and performance tooling.
 
 ## What you’ll learn
 
-- How Tenney stores lattice geometry.
-- What makes the tuner fast enough for live use.
-- Where to experiment safely.
+- How Tenney represents ratios internally.
+- Which models power the lattice search.
+- What to monitor for performance stability.
 
-:::tip Scope before scaling
-Prototype a tuning with 5–7 nodes before expanding, so you can verify stability early.
+:::tip Keep notes
+Capture tuning notes as you experiment so you can reproduce the same lattice later.
 :::
 
-## <span class="docs-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 4.5h9m-9 7.5h9m-9 7.5h9M4.5 4.5v15m15-15v15" /></svg> Data model</span>
+## <span class="docs-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m10.5 0a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z" /></svg> Data model</span>
 
-Tenney stores each node as a ratio plus lattice coordinates, so scales can be rebuilt in any octave.
+Tenney stores each scale as a set of ratios, metadata, and timing cues. The dataset is designed to be portable.
 
-:::info Safety rails
-The data layer clamps extreme ratios to protect the tuner from unstable ranges.
-:::
+## <span class="docs-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" /></svg> Performance notes</span>
 
-## <span class="docs-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" /></svg> Performance notes</span>
-
-Keep lattices shallow during live sets; large jumps can destabilize monitoring for the ensemble.
-
-<details>
-  <summary>Under the hood</summary>
-  The tuner uses a rolling FFT window and caches ratio conversions to maintain low latency on mobile hardware.
-</details>
-
-More coming soon: scripting hooks and automation APIs.
+Use the advanced diagnostics to spot drift before it becomes audible.

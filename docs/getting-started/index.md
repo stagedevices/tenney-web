@@ -1,3 +1,7 @@
+---
+title: Getting started
+---
+
 # Getting started
 
 Tenney’s fastest path to sound: connect your device, load a lattice preset, and export your first scale in minutes.
