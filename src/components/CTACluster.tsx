@@ -8,11 +8,7 @@ export const APP_STORE_BADGE_LIGHT =
 export const APP_STORE_BADGE_DARK =
   "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/en-us?releaseDate=1764547200";
 
-export const BETA_LINK = "https://testflight.apple.com/join/mWAWKYHT";
-
-export const betaLinks = {
-  beta: BETA_LINK,
-};
+export const IOS_TESTFLIGHT_LATEST = "https://testflight.apple.com/join/mWAWKYHT";
 
 export default function CTACluster() {
   const { effectiveTheme } = useTheme();
@@ -20,19 +16,19 @@ export default function CTACluster() {
 
   return (
     <div className="flex flex-col gap-4">
-      <a href={APP_STORE_LINK} target="_blank" rel="noreferrer">
+      <a href={APP_STORE_LINK} target="_blank" rel="noreferrer noopener">
         <img src={badgeSrc} alt="Download on the App Store" className="h-12" />
       </a>
       <div className="flex flex-wrap gap-3">
         <TenneyButton
-          href={BETA_LINK}
+          href={IOS_TESTFLIGHT_LATEST}
           target="_blank"
-          rel="noreferrer"
+          rel="noreferrer noopener"
           as="a"
           size="sm"
           variant="primary"
         >
-          Join TestFlight Beta
+          Join Public Beta
         </TenneyButton>
       </div>
     </div>
