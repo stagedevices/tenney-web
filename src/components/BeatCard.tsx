@@ -17,6 +17,7 @@ interface BeatCardProps {
   index: number;
   total: number;
   active: boolean;
+  surface?: "card" | "plain";
 }
 
 const accentStyles = {
@@ -24,10 +25,15 @@ const accentStyles = {
   warm: "border-tenney-amber/60 bg-white/80 dark:bg-slate-900/60",
 };
 
-export default function BeatCard({ beat, index, total, active }: BeatCardProps) {
+export default function BeatCard({ beat, index, total, active, surface = "card" }: BeatCardProps) {
+  const surfaceClass =
+    surface === "card"
+      ? `tenney-plusgrid tenney-beatcard rounded-card border p-6 shadow-softer backdrop-blur-lg ${accentStyles[beat.accent]}`
+      : "tenney-beatcard relative p-6";
+
   return (
     <motion.div
-      className={`tenney-plusgrid tenney-beatcard rounded-card border p-6 shadow-softer backdrop-blur-lg ${accentStyles[beat.accent]}`}
+      className={surfaceClass}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: active ? 1 : 0.45, y: active ? 0 : 10 }}
       transition={{ duration: 0.5 }}

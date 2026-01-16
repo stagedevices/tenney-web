@@ -16,9 +16,6 @@ const baseUrl = import.meta.env.BASE_URL || "/";
 
 const docsHref = `${baseUrl}docs/`;
 
-const STAGE_DEVICES_LINK = "https://stagedevices.com";
-const IOS_TESTFLIGHT_LATEST = "https://testflight.apple.com/join/mWAWKYHT";
-
 export default function Header({ storyBeatIndex = 0, storyActive = false }: HeaderProps) {
   const location = useLocation();
   const scrollCondensed = useCondensedNav({ threshold: 140, hysteresis: 36 });
@@ -111,7 +108,7 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
               <img
                 src={`${baseUrl}assets/wordmark.png`}
                 alt="Tenney"
-                className="h-6 w-auto"
+                className="h-8 w-auto"
                 onError={() => setWordmarkError(true)}
               />
             ) : (
@@ -141,22 +138,6 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
               </button>
             ) : (
               <>
-                <a
-                  href={STAGE_DEVICES_LINK}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-xs font-medium text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
-                >
-                  Stage Devices
-                </a>
-                <a
-                  href={IOS_TESTFLIGHT_LATEST}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-xs font-medium text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
-                >
-                  Join Public Beta
-                </a>
                 <div className="glass-pill flex rounded-pill p-1 text-[11px] text-slate-700 dark:text-slate-200">
                   {[
                     { id: "system", label: "Auto" },
