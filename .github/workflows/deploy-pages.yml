@@ -29,6 +29,8 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Verify base paths
+        run: node scripts/check-base.mjs
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
