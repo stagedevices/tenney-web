@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import BackgroundField from "../components/BackgroundField";
 import StoryStage from "../components/StoryStage";
 import { Beat } from "../components/BeatCard";
+import HomeFeatureChip from "../components/HomeFeatureChip";
 import { base } from "../lib/base";
 
 const screenBase = `${base}assets/screens`;
@@ -170,22 +171,47 @@ export default function Home({ onStoryStateChange }: HomeProps) {
           <div className="mt-6 grid gap-6 md:grid-cols-3">
             {[
               {
+                to: "/features#stage",
                 title: "Performance ready",
                 description: "High-contrast meters, confident touch targets, and a calm stage view.",
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 3l-1 7h7l-9 11 1-7H4z" />
+                  </svg>
+                ),
               },
               {
+                to: "/features#export",
                 title: "Research friendly",
                 description: "Capture ratio data, organize scales, and export sessions with context.",
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 3h6l2 4h4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7h4l2-4z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8" />
+                  </svg>
+                ),
               },
               {
+                to: "/features#export",
                 title: "Collaborative",
                 description: "Share scale libraries and lattice snapshots with ensembles.",
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 11a3 3 0 1 1 2.7-4.2" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 11a3 3 0 1 0-2.7-4.2" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 20a4 4 0 0 1 4-4h2" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 20a4 4 0 0 0-4-4h-2" />
+                  </svg>
+                ),
               },
             ].map((item) => (
-              <div key={item.title} className="tenney-plusgrid rounded-card border border-tenney-line bg-white/70 p-5 dark:bg-slate-950/60">
-                <h4 className="text-sm font-semibold">{item.title}</h4>
-                <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">{item.description}</p>
-              </div>
+              <HomeFeatureChip
+                key={item.title}
+                to={item.to}
+                title={item.title}
+                description={item.description}
+                icon={item.icon}
+              />
             ))}
           </div>
         </section>

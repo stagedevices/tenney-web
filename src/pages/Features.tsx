@@ -244,6 +244,41 @@ const featureSections: FeatureSectionData[] = [
   },
 ];
 
+function useImageAspect(src: string, fallback = 9 / 19.5) {
+  const [aspect, setAspect] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!src) {
+      setAspect(fallback);
+      return;
+    }
+
+    let active = true;
+    const img = new Image();
+    img.onload = () => {
+      if (!active) return;
+      const width = img.naturalWidth;
+      const height = img.naturalHeight;
+      if (width && height) {
+        setAspect(width / height);
+      } else {
+        setAspect(fallback);
+      }
+    };
+    img.onerror = () => {
+      if (active) {
+        setAspect(fallback);
+      }
+    };
+    img.src = src;
+    return () => {
+      active = false;
+    };
+  }, [src, fallback]);
+
+  return aspect ?? fallback;
+}
+
 function AnchorChip({
   item,
   activeId,
@@ -341,16 +376,20 @@ function FeatureSection({ section, index }: { section: FeatureSectionData; index
 
 function StickyPhoneRail({ activeId }: { activeId: string }) {
   const activeScreen = phoneScreens.find((screen) => screen.id === activeId) ?? phoneScreens[0];
+  const aspectRatio = useImageAspect(phoneScreens[0]?.src ?? "");
 
   return (
     <div className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-4 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
-      <div className="relative mx-auto h-[420px] w-[230px]">
+      <div
+        className="relative mx-auto w-[230px] max-w-full"
+        style={{ aspectRatio: aspectRatio ? String(aspectRatio) : undefined }}
+      >
         {phoneScreens.map((screen) => (
           <img
             key={screen.id}
             src={screen.src}
             alt={screen.alt}
-            className={`absolute inset-0 h-full w-full rounded-2xl border border-white/40 shadow-lg transition-opacity duration-500 dark:border-slate-900/40 ${
+            className={`absolute inset-0 h-full w-full rounded-2xl border border-white/40 object-contain shadow-lg transition-opacity duration-500 dark:border-slate-900/40 ${
               screen.id === activeId ? "opacity-100" : "opacity-0"
             }`}
           />
