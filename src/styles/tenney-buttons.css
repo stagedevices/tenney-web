@@ -87,16 +87,34 @@
 }
 
 .tenney-btn--primary {
-  --tenney-btn-bg: linear-gradient(135deg, rgba(5, 219, 254, 0.9), rgba(2, 156, 254, 0.92));
-  --tenney-btn-color: #0b0f15;
+  --tenney-btn-bg: linear-gradient(135deg, var(--tenney-cyan), var(--tenney-blue));
+  --tenney-btn-color: #fff;
   --tenney-btn-border: rgba(255, 255, 255, 0.65);
-  --tenney-btn-shadow: 0 16px 30px rgba(2, 156, 254, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -1px 0 rgba(5, 219, 254, 0.4);
-  --tenney-btn-shadow-hover: 0 20px 34px rgba(2, 156, 254, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 -1px 0 rgba(5, 219, 254, 0.5);
-  --tenney-btn-focus: rgba(5, 219, 254, 0.45);
+  --tenney-btn-shadow: 0 16px 30px rgba(2, 156, 254, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.35);
+  --tenney-btn-shadow-hover: 0 20px 34px rgba(2, 156, 254, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.45);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.42);
   --tenney-btn-magnet-opacity: 0.4;
   --tenney-btn-sweep-color: rgba(255, 255, 255, 0.65);
+}
+
+html[data-primary-tone="cool"] .tenney-btn--primary {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(5, 219, 254, 0.95), rgba(2, 156, 254, 0.96));
+  --tenney-btn-shadow: 0 16px 30px rgba(2, 156, 254, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.4);
+  --tenney-btn-shadow-hover: 0 20px 34px rgba(2, 156, 254, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.5);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.45);
+}
+
+html[data-primary-tone="warm"] .tenney-btn--primary {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(255, 145, 64, 0.95), rgba(255, 170, 72, 0.96));
+  --tenney-btn-shadow: 0 16px 30px rgba(255, 140, 64, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(255, 158, 72, 0.35);
+  --tenney-btn-shadow-hover: 0 20px 34px rgba(255, 140, 64, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(255, 158, 72, 0.45);
+  --tenney-btn-focus: rgba(255, 145, 64, 0.4);
 }
 
 .tenney-btn--secondary {
@@ -109,17 +127,17 @@
   --tenney-btn-focus: rgba(5, 219, 254, 0.22);
   --tenney-btn-magnet-opacity: 0.26;
   background-image: var(--tenney-btn-plusgrid), var(--tenney-btn-bg);
-  background-size: 28px 28px, cover;
+  background-size: 12px 12px, cover;
   background-repeat: repeat, no-repeat;
   background-blend-mode: overlay, normal;
 }
 
 .tenney-btn--secondary.tenney-btn--warm {
   --tenney-btn-focus: rgba(255, 123, 47, 0.35);
-  --tenney-btn-shadow: 0 12px 24px rgba(255, 123, 47, 0.16), inset 0 1px 0 rgba(255,  255, 255, 0.65),
-    inset 0 -1px 0 rgba(255, 123, 47, 0.18);
-  --tenney-btn-shadow-hover: 0 16px 30px rgba(255, 123, 47, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -1px 0 rgba(255, 123, 47, 0.22);
+  --tenney-btn-shadow: 0 12px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.16);
+  --tenney-btn-shadow-hover: 0 16px 28px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.2);
 }
 
 .tenney-btn--ghost {
@@ -205,7 +223,25 @@
     inset 0 -1px 0 rgba(5, 219, 254, 0.35);
   --tenney-btn-shadow-hover: 0 22px 38px rgba(1, 8, 20, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.2),
     inset 0 -1px 0 rgba(5, 219, 254, 0.45);
-  --tenney-btn-color: #0b0f15;
+  --tenney-btn-color: #fff;
+}
+
+html.dark[data-primary-tone="cool"] .tenney-btn--primary {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(5, 219, 254, 0.9), rgba(2, 156, 254, 0.92));
+  --tenney-btn-shadow: 0 18px 34px rgba(1, 8, 20, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.4);
+  --tenney-btn-shadow-hover: 0 22px 38px rgba(1, 8, 20, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(5, 219, 254, 0.5);
+  --tenney-btn-focus: rgba(5, 219, 254, 0.4);
+}
+
+html.dark[data-primary-tone="warm"] .tenney-btn--primary {
+  --tenney-btn-bg: linear-gradient(135deg, rgba(255, 145, 64, 0.92), rgba(255, 171, 72, 0.94));
+  --tenney-btn-shadow: 0 18px 34px rgba(1, 8, 20, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(255, 158, 72, 0.38);
+  --tenney-btn-shadow-hover: 0 22px 38px rgba(1, 8, 20, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 158, 72, 0.48);
+  --tenney-btn-focus: rgba(255, 145, 64, 0.38);
 }
 
 .dark .tenney-btn--secondary {

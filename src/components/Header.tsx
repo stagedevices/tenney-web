@@ -14,8 +14,6 @@ interface HeaderProps {
 
 const baseUrl = import.meta.env.BASE_URL || "/";
 
-const docsHref = `${baseUrl}docs/`;
-
 export default function Header({ storyBeatIndex = 0, storyActive = false }: HeaderProps) {
   const location = useLocation();
   const scrollCondensed = useCondensedNav({ threshold: 140, hysteresis: 36 });
@@ -32,7 +30,6 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
     if (path.startsWith("/beta")) return "beta";
     if (path.startsWith("/press")) return "press";
     if (path.startsWith("/privacy")) return "privacy";
-    if (path.startsWith("/docs")) return "docs";
     return undefined;
   }, [location.pathname]);
 
@@ -76,17 +73,6 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 5h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 9h8M7 12h8M7 15h5" />
-          </svg>
-        ),
-      },
-      {
-        id: "docs",
-        label: "Docs",
-        href: docsHref,
-        icon: (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 4h9a3 3 0 0 1 3 3v12a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 8h6M9 12h6M9 16h4" />
           </svg>
         ),
       },

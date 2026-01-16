@@ -1,5 +1,5 @@
 import { MotionConfig } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -15,6 +15,14 @@ const easing = [0.22, 0.8, 0.28, 1];
 
 export default function App() {
   const [storyState, setStoryState] = useState({ beatIndex: 0, isActive: false });
+  const primaryTone = useMemo(() => (Math.random() < 0.5 ? "cool" : "warm"), []);
+
+  useEffect(() => {
+    document.documentElement.dataset.primaryTone = primaryTone;
+    return () => {
+      delete document.documentElement.dataset.primaryTone;
+    };
+  }, [primaryTone]);
 
   return (
     <MotionConfig transition={{ duration: 0.6, ease: easing }}>
