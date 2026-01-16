@@ -8,6 +8,8 @@ import DocsRedirect from "./pages/DocsRedirect";
 import Beta from "./pages/Beta";
 import Press from "./pages/Press";
 import Privacy from "./pages/Privacy";
+import Features from "./pages/Features";
+import FeaturesWhitePaper from "./pages/FeaturesWhitePaper";
 
 const easing = [0.22, 0.8, 0.28, 1];
 
@@ -21,6 +23,8 @@ export default function App() {
         <div className="flex-1 pb-24 md:pb-0">
           <Routes>
             <Route path="/" element={<Home onStoryStateChange={setStoryState} />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/features/white-paper" element={<FeaturesWhitePaper />} />
             <Route path="/docs/*" element={<DocsRedirect />} />
             <Route path="/beta" element={<Beta />} />
             <Route path="/press" element={<Press />} />

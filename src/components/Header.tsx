@@ -28,6 +28,7 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
   const activeId = useMemo(() => {
     const path = location.pathname;
     if (path === "/") return "home";
+    if (path.startsWith("/features")) return "features";
     if (path.startsWith("/beta")) return "beta";
     if (path.startsWith("/press")) return "press";
     if (path.startsWith("/privacy")) return "privacy";
@@ -44,6 +45,16 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
         icon: (
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 11.5l8-6.5 8 6.5v7a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" />
+          </svg>
+        ),
+      },
+      {
+        id: "features",
+        label: "Features",
+        to: "/features",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" />
           </svg>
         ),
       },
