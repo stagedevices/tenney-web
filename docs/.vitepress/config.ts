@@ -1,15 +1,15 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  base: "/tenney-web/docs/",
+  base: "/docs/",
   title: "Tenney Docs",
   description: "Guides and reference material for building and performing with Tenney.",
   themeConfig: {
     nav: [
-      { text: "Tenney", link: "/tenney-web/" },
+      { text: "Tenney", link: "/" },
       { text: "Docs", link: "/" },
-      { text: "Press", link: "/tenney-web/press" },
-      { text: "Beta", link: "/tenney-web/beta" },
+      { text: "Press", link: "/press" },
+      { text: "Beta", link: "/beta" },
     ],
     sidebar: [
       {

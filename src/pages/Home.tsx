@@ -3,8 +3,9 @@ import BackgroundField from "../components/BackgroundField";
 import StoryStage from "../components/StoryStage";
 import CTACluster from "../components/CTACluster";
 import { Beat } from "../components/BeatCard";
+import { base } from "../lib/base";
 
-const screenBase = "/tenney-web/assets/screens";
+const screenBase = `${base}assets/screens`;
 
 interface HomeProps {
   onStoryStateChange?: (state: { beatIndex: number; isActive: boolean }) => void;
