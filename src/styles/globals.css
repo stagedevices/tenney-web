@@ -204,6 +204,10 @@ body {
   position: relative;
   display: inline-flex;
   align-items: center;
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 92vw;
+  white-space: nowrap;
   gap: 0.2rem;
   padding: 0.35rem;
   border-radius: 999px;
@@ -278,7 +282,11 @@ body {
 }
 
 .tenney-pill-label {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
   letter-spacing: 0.01em;
+  will-change: max-width, opacity;
 }
 
 .tenney-pill-icon svg {
