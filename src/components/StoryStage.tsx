@@ -205,9 +205,9 @@ export default function StoryStage({ beats, onExit, onStoryStateChange }: StoryS
               ref={(el) => {
                 observerRefs.current[index] = el;
               }}
-              className="mb-8"
+              className="relative mb-8 before:pointer-events-none before:absolute before:-inset-x-6 before:inset-y-0 before:bg-gradient-to-b before:from-white/70 before:via-white/30 before:to-transparent before:opacity-80 dark:before:from-slate-950/60 dark:before:via-slate-950/30 dark:before:to-transparent"
             >
-              <BeatCard beat={beat} index={index} total={total} active={activeIndex === index} />
+              <BeatCard beat={beat} index={index} total={total} active={activeIndex === index} surface="plain" />
             </div>
           ))}
         </div>
@@ -223,7 +223,9 @@ export default function StoryStage({ beats, onExit, onStoryStateChange }: StoryS
       <section className={`story-viewport ${isActive ? "story-locked" : ""} relative z-10`}>
         <div className="mx-auto grid h-full max-w-6xl items-center gap-10 px-6 md:grid-cols-[minmax(0,1fr)_360px] lg:grid-cols-[minmax(0,1fr)_420px]">
           <div className="flex w-full flex-col items-start justify-center">
-            <BeatCard beat={activeBeat} index={activeIndex} total={total} active={isActive} />
+            <div className="relative w-full before:pointer-events-none before:absolute before:-inset-x-6 before:inset-y-0 before:bg-gradient-to-b before:from-white/70 before:via-white/30 before:to-transparent before:opacity-80 dark:before:from-slate-950/60 dark:before:via-slate-950/30 dark:before:to-transparent">
+              <BeatCard beat={activeBeat} index={activeIndex} total={total} active={isActive} surface="plain" />
+            </div>
             <div className="mt-4 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
               <span>Scroll to explore</span>
               <button

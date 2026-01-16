@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import BackgroundField from "../components/BackgroundField";
 import StoryStage from "../components/StoryStage";
-import CTACluster from "../components/CTACluster";
 import { Beat } from "../components/BeatCard";
 import { base } from "../lib/base";
 
@@ -188,17 +187,6 @@ export default function Home({ onStoryStateChange }: HomeProps) {
                 <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">{item.description}</p>
               </div>
             ))}
-          </div>
-        </section>
-        <section className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-10 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h3 className="text-2xl font-semibold">Ready to explore Tenney?</h3>
-              <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                Install the app or join the Public Beta (TestFlight) for early access to new features.
-              </p>
-            </div>
-            <CTACluster />
           </div>
         </section>
       </div>
