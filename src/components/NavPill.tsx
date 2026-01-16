@@ -22,31 +22,33 @@ export default function NavPill({ items, activeId, condensed = false }: NavPillP
   const reducedMotion = useReducedMotion();
   const transition = reducedMotion
     ? { duration: 0 }
-    : { type: "spring", stiffness: 320, damping: 28, mass: 0.6 };
+    : { type: "spring", stiffness: 520, damping: 42, mass: 0.8 };
   const labelTransition = reducedMotion ? { duration: 0 } : { duration: 0.2, ease: "easeOut" };
 
   const containerVariants = {
     expanded: {
       height: 52,
-      padding: "0.35rem",
-      gap: "0.2rem",
+      paddingLeft: 16,
+      paddingRight: 16,
+      columnGap: 10,
       scale: 1,
     },
     condensed: {
       height: 44,
-      padding: "0.25rem",
-      gap: "0.15rem",
-      scale: reducedMotion ? 1 : 0.98,
+      paddingLeft: 10,
+      paddingRight: 10,
+      columnGap: 6,
+      scale: reducedMotion ? 1 : 0.985,
     },
   };
 
   const itemVariants = {
-    expanded: { gap: "0.5rem", paddingLeft: "0.75rem", paddingRight: "0.75rem" },
-    condensed: { gap: "0.3rem", paddingLeft: "0.6rem", paddingRight: "0.6rem" },
+    expanded: { columnGap: 8, paddingLeft: 12, paddingRight: 12 },
+    condensed: { columnGap: 6, paddingLeft: 10, paddingRight: 10 },
   };
 
   const labelVariants = {
-    expanded: { opacity: 1, maxWidth: 120, marginLeft: 6 },
+    expanded: { opacity: 1, maxWidth: 140, marginLeft: 8 },
     condensed: { opacity: 0, maxWidth: 0, marginLeft: 0 },
   };
 
@@ -57,10 +59,10 @@ export default function NavPill({ items, activeId, condensed = false }: NavPillP
     <motion.nav
       aria-label="Primary"
       className="tenney-pill"
+      initial={false}
       variants={containerVariants}
       animate={condensed ? "condensed" : "expanded"}
       transition={transition}
-      layout
     >
       {items.map((item) => {
         const isActive = item.id === activeId;
@@ -74,12 +76,11 @@ export default function NavPill({ items, activeId, condensed = false }: NavPillP
               {item.icon}
             </span>
             <motion.span
-              className="tenney-pill-label overflow-hidden whitespace-nowrap"
+              className="tenney-pill-label"
               aria-hidden={condensed}
               variants={labelVariants}
               animate={condensed ? "condensed" : "expanded"}
               transition={labelTransition}
-              style={{ originX: 0 }}
             >
               {label}
             </motion.span>
@@ -100,7 +101,6 @@ export default function NavPill({ items, activeId, condensed = false }: NavPillP
               variants={itemVariants}
               animate={condensed ? "condensed" : "expanded"}
               transition={transition}
-              layout
             >
               {content}
             </MotionLink>
@@ -120,7 +120,6 @@ export default function NavPill({ items, activeId, condensed = false }: NavPillP
             variants={itemVariants}
             animate={condensed ? "condensed" : "expanded"}
             transition={transition}
-            layout
           >
             {content}
           </MotionAnchor>
