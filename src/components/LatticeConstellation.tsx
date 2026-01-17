@@ -62,7 +62,7 @@ const edges = [
   ["n6", "n15"],
 ];
 
-export default function LatticeConstellation() {
+export default function LatticeConstellation({ className }: { className?: string }) {
   const reducedMotion = useReducedMotion();
   const [offset, setOffset] = useState<Offset>({ x: 0, y: 0 });
 
@@ -98,33 +98,20 @@ export default function LatticeConstellation() {
     };
   }, [reducedMotion, allowParallax]);
 
+  const wrapperClasses = ["pointer-events-none", className].filter(Boolean).join(" ");
+
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+    <div className={wrapperClasses}>
       <svg
         viewBox="0 0 600 380"
-        className="h-full w-full max-w-[560px]"
+        className="h-full w-full"
         style={{
           transform: reducedMotion ? "none" : `translate3d(${offset.x}px, ${offset.y}px, 0)`,
         }}
-        aria-hidden
+        aria-hidden="true"
+        focusable="false"
       >
-        <defs>
-          <radialGradient id="tenney-glow" cx="50%" cy="45%" r="55%">
-            <stop offset="0%" stopColor="rgba(56, 189, 248, 0.4)" />
-            <stop offset="55%" stopColor="rgba(59, 130, 246, 0.18)" />
-            <stop offset="100%" stopColor="rgba(59, 130, 246, 0)" />
-          </radialGradient>
-          <linearGradient id="tenney-edge" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(125, 211, 252, 0.55)" />
-            <stop offset="60%" stopColor="rgba(148, 163, 184, 0.25)" />
-            <stop offset="100%" stopColor="rgba(37, 99, 235, 0.3)" />
-          </linearGradient>
-          <mask id="tenney-fade">
-            <rect width="600" height="380" fill="url(#tenney-glow)" />
-          </mask>
-        </defs>
-        <rect width="600" height="380" fill="url(#tenney-glow)" opacity="0.35" />
-        <g mask="url(#tenney-fade)" stroke="url(#tenney-edge)" strokeWidth="1">
+        <g stroke="currentColor" strokeWidth="1.25">
           {edges.map(([from, to]) => {
             const start = nodes.find((node) => node.id === from);
             const end = nodes.find((node) => node.id === to);
@@ -136,16 +123,16 @@ export default function LatticeConstellation() {
                 y1={start.y}
                 x2={end.x}
                 y2={end.y}
-                opacity="0.45"
+                opacity="0.5"
               />
             );
           })}
         </g>
-        <g mask="url(#tenney-fade)">
+        <g>
           {nodes.map((node) => (
             <g key={node.id}>
-              <circle cx={node.x} cy={node.y} r="6" fill="rgba(59, 130, 246, 0.12)" />
-              <circle cx={node.x} cy={node.y} r="2.5" fill="rgba(125, 211, 252, 0.7)" />
+              <circle cx={node.x} cy={node.y} r="6" fill="currentColor" opacity="0.15" />
+              <circle cx={node.x} cy={node.y} r="2.5" fill="currentColor" opacity="0.75" />
             </g>
           ))}
         </g>
