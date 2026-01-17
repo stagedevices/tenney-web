@@ -18,7 +18,7 @@ type FilterOption = {
 
 const DISCORD_URL = "https://discord.gg/REPLACE_ME";
 const SCALE_LIBRARY_REPO_URL = "https://github.com/stagedevices/tenney-scales";
-const FEATURE_REQUESTS_URL = "https://github.com/stagedevices/tenney/issues/new/choose";
+const FEATURE_REQUESTS_URL = "https://github.com/stagedevices/tenney/issues/new?template=feature_request.yml";
 const CODE_OF_CONDUCT_URL = "https://github.com/community/community/blob/main/CODE_OF_CONDUCT.md";
 
 const anchorItems: AnchorItem[] = [
