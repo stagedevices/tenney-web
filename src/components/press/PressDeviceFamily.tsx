@@ -12,29 +12,29 @@ type PressDeviceFamilyProps = {
 
 const desktopLayout = {
   iPhone: {
-    width: "clamp(210px, 20vw, 320px)",
+    width: "clamp(200px, 18vw, 300px)",
     left: "50%",
     top: "55%",
     transform:
-      "translate(-50%, -50%) translateZ(80px) rotateY(0deg) rotateX(4deg) rotateZ(0.5deg)",
+      "translate(-50%, -50%) translateZ(60px) rotateY(0deg) rotateX(4deg) rotateZ(0.5deg)",
     shadow: "drop-shadow(0 22px 32px rgba(15, 23, 42, 0.28))",
     zIndex: 30,
   },
   iPad: {
     width: "clamp(260px, 26vw, 420px)",
-    left: "34%",
+    left: "28%",
     top: "58%",
     transform:
-      "translate(-50%, -50%) translateZ(10px) rotateY(-14deg) rotateX(6deg) rotateZ(-2deg) scale(0.92)",
+      "translate(-50%, -50%) translateZ(10px) rotateY(-14deg) rotateX(6deg) rotateZ(-2deg) scale(0.95)",
     shadow: "drop-shadow(0 30px 48px rgba(15, 23, 42, 0.22))",
     zIndex: 20,
   },
   Mac: {
     width: "clamp(320px, 30vw, 520px)",
-    left: "68%",
+    left: "74%",
     top: "60%",
     transform:
-      "translate(-50%, -50%) translateZ(0px) rotateY(16deg) rotateX(5deg) rotateZ(1.5deg) scale(0.88)",
+      "translate(-50%, -50%) translateZ(0px) rotateY(16deg) rotateX(5deg) rotateZ(1.5deg) scale(0.90)",
     shadow: "drop-shadow(0 38px 64px rgba(15, 23, 42, 0.2))",
     zIndex: 10,
   },
