@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" fill="none">
+  <rect x="24" y="24" width="672" height="472" rx="36" fill="#0B0C0F" stroke="#1F2937" stroke-width="6" />
+  <rect x="52" y="64" width="616" height="392" rx="24" fill="#0F172A" />
+  <circle cx="360" cy="44" r="6" fill="#334155" />
+  <path d="M120 164h360" stroke="#1E293B" stroke-width="6" stroke-linecap="round" />
+  <path d="M120 220h280" stroke="#1E293B" stroke-width="6" stroke-linecap="round" />
+  <circle cx="220" cy="320" r="70" stroke="#38BDF8" stroke-width="6" />
+  <circle cx="420" cy="320" r="92" stroke="#FDBA74" stroke-width="6" />
+  <text x="360" y="420" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui" font-size="22" fill="#94A3B8">Tenney for iPad</text>
+</svg>

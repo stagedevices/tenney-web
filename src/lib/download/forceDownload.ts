@@ -1,4 +1,5 @@
 type ForceDownloadOptions = {
+  mimeType?: string;
   timeoutMs?: number;
 };
 
@@ -11,12 +12,13 @@ export const forceDownload = async (
   const timeout = window.setTimeout(() => controller.abort(), opts.timeoutMs ?? 12000);
 
   try {
-    const response = await fetch(url, { signal: controller.signal });
+    const response = await fetch(url, { mode: "cors", signal: controller.signal });
     if (!response.ok) {
       throw new Error(`Download failed with status ${response.status}`);
     }
     const blob = await response.blob();
-    const objectUrl = URL.createObjectURL(blob);
+    const resolvedBlob = opts.mimeType ? new Blob([blob], { type: opts.mimeType }) : blob;
+    const objectUrl = URL.createObjectURL(resolvedBlob);
     const anchor = document.createElement("a");
     anchor.href = objectUrl;
     anchor.download = filename;

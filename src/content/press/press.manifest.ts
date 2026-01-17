@@ -12,6 +12,13 @@ export type PressScreenshot = PressAsset & {
   deviceFamily: "iPhone" | "iPad" | "Mac";
 };
 
+export type PressHeroDevice = {
+  label: string;
+  deviceFamily: "iPhone" | "iPad" | "Mac";
+  pathSvg: string;
+  caption: string;
+};
+
 export type PressManifest = {
   version: string;
   contactEmail: string;
@@ -23,6 +30,7 @@ export type PressManifest = {
     pressKitZipPath: string;
     factsheetPdfPath: string;
   };
+  heroDevices: PressHeroDevice[];
   logos: PressAsset[];
   screenshots: PressScreenshot[];
   copyBlocks: {
@@ -49,6 +57,26 @@ const pressManifest = {
     pressKitZipPath: "/press/presskit.zip",
     factsheetPdfPath: "/press/factsheet.pdf",
   },
+  heroDevices: [
+    {
+      label: "Tenney iPhone hero placeholder",
+      deviceFamily: "iPhone",
+      pathSvg: "/assets/press/hero-iphone.svg",
+      caption: "Tenney for iPhone",
+    },
+    {
+      label: "Tenney iPad hero placeholder",
+      deviceFamily: "iPad",
+      pathSvg: "/assets/press/hero-ipad.svg",
+      caption: "Tenney for iPad",
+    },
+    {
+      label: "Tenney Mac hero placeholder",
+      deviceFamily: "Mac",
+      pathSvg: "/assets/press/hero-mac.svg",
+      caption: "Tenney for Mac",
+    },
+  ],
   logos: [
     {
       label: "Tenney wordmark",

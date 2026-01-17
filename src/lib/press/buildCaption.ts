@@ -1,10 +1,9 @@
 type CaptionInput = {
   caption: string;
   copyright: string;
-  copyrightDate: string;
-  label: string;
+  lastUpdated: string;
 };
 
-export const buildCaption = ({ caption, copyright, copyrightDate, label }: CaptionInput) => {
-  return `${caption}\n\n© ${copyright} — ${copyrightDate} — ${label}`;
+export const buildCaption = ({ caption, copyright, lastUpdated }: CaptionInput) => {
+  return `${caption}\n© ${copyright} — Last updated: ${lastUpdated}`;
 };
