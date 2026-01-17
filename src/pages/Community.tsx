@@ -1,23 +1,26 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import BackgroundField from "../components/BackgroundField";
 import LatticeConstellation from "../components/LatticeConstellation";
 import TenneyButton from "../components/TenneyButton";
 import { IOS_TESTFLIGHT_LATEST } from "../components/CTACluster";
-import { scalePacks, type ScalePack } from "../content/scalePacks";
 import { useReducedMotion } from "../lib/reducedMotion";
+import type { TenneyScalePack } from "../lib/tenneyScales/types";
+import {
+  packAsclUrl,
+  packKbmUrl,
+  packSclUrl,
+  packTenneyUrl,
+} from "../lib/tenneyScales/urls";
+import { useTenneyScalesIndex } from "../lib/tenneyScales/useTenneyScalesIndex";
 
 type AnchorItem = {
   id: string;
   label: string;
 };
 
-type FilterOption = {
-  label: string;
-  value: number | "all" | "13+";
-};
-
 const DISCORD_URL = "https://discord.gg/REPLACE_ME";
 const SCALE_LIBRARY_REPO_URL = "https://github.com/stagedevices/tenney-scales";
+const SCALE_SUBMIT_URL = "https://github.com/stagedevices/tenney-scales/issues/new/choose";
 const FEATURE_REQUESTS_URL = "https://github.com/stagedevices/tenney/issues/new?template=feature_request.yml";
 const CODE_OF_CONDUCT_URL = "https://github.com/community/community/blob/main/CODE_OF_CONDUCT.md";
 
@@ -27,15 +30,6 @@ const anchorItems: AnchorItem[] = [
   { id: "feature-requests", label: "Feature requests" },
   { id: "beta", label: "Public Beta" },
   { id: "contribute", label: "Contribute" },
-];
-
-const limitFilters: FilterOption[] = [
-  { label: "All", value: "all" },
-  { label: "3", value: 3 },
-  { label: "5", value: 5 },
-  { label: "7", value: 7 },
-  { label: "11", value: 11 },
-  { label: "13+", value: "13+" },
 ];
 
 const startActions = [
@@ -104,103 +98,110 @@ function AnchorChip({
   );
 }
 
-function LimitChip({
-  option,
-  active,
-  disabled = false,
-  onSelect,
-}: {
-  option: FilterOption;
-  active: boolean;
-  disabled?: boolean;
-  onSelect: (value: FilterOption["value"]) => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={() => onSelect(option.value)}
-      disabled={disabled}
-      className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
-        disabled
-          ? "cursor-not-allowed border-tenney-line/60 bg-white/60 text-slate-400 shadow-none dark:bg-slate-950/40 dark:text-slate-500"
-          : active
-          ? "border-sky-300 bg-white text-slate-900 shadow-soft dark:border-sky-500 dark:bg-slate-900 dark:text-white"
-          : "border-tenney-line/70 bg-white/70 text-slate-600 hover:text-slate-900 dark:bg-slate-950/60 dark:text-slate-300 dark:hover:text-white"
-      }`}
-    >
-      {option.label}
-    </button>
-  );
+function formatLicense(license: string) {
+  if (license.toLowerCase().startsWith("cc0")) return "CC0";
+  return license;
 }
 
-function PackCard({ pack }: { pack: ScalePack }) {
+function PackCard({
+  pack,
+  onCopy,
+  isCopied,
+}: {
+  pack: TenneyScalePack;
+  onCopy: (pack: TenneyScalePack) => void;
+  isCopied: boolean;
+}) {
+  const tenneyUrl = packTenneyUrl(pack);
+  const sclUrl = packSclUrl(pack);
+  const kbmUrl = packKbmUrl(pack);
+  const asclUrl = packAsclUrl(pack);
   return (
     <div className="tenney-plusgrid flex h-full flex-col gap-4 rounded-card border border-tenney-line/70 bg-white/80 p-6 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-sky-300/70 bg-white/90 px-3 py-1 text-[11px] font-semibold text-slate-700 shadow-soft dark:border-sky-500/70 dark:bg-slate-900 dark:text-white">
-            {pack.limit}-limit
-          </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-            CC0
+            {formatLicense(pack.license)}
+          </span>
+          <span className="rounded-full border border-sky-300/70 bg-white/90 px-3 py-1 text-[11px] font-semibold text-slate-700 shadow-soft dark:border-sky-500/70 dark:bg-slate-900 dark:text-white">
+            {pack.defaults.primeLimit}-limit
           </span>
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{pack.title}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">By {pack.author}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            By{" "}
+            {pack.authorUrl ? (
+              <a
+                href={pack.authorUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="font-semibold text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              >
+                {pack.author}
+              </a>
+            ) : (
+              pack.author
+            )}
+          </p>
         </div>
-        <p className="tenney-chip-description text-sm text-slate-600 dark:text-slate-300">
+        <p className="tenney-chip-description line-clamp-3 text-sm text-slate-600 dark:text-slate-300">
           {pack.description}
         </p>
       </div>
       <div className="mt-auto space-y-3 text-xs text-slate-600 dark:text-slate-300">
         <div className="flex flex-wrap gap-2">
-          {pack.formats.map((format) => (
+          {pack.tags.map((tag) => (
             <span
-              key={format}
+              key={tag}
               className="rounded-full border border-tenney-line/60 bg-white/80 px-2 py-1 text-[11px] font-medium text-slate-600 dark:bg-slate-950/60 dark:text-slate-300"
             >
-              {format}
+              {tag}
             </span>
           ))}
         </div>
-        {pack.tags && (
-          <div className="flex flex-wrap gap-2">
-            {pack.tags.map((tag) => (
-              <span key={tag} className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-        <div className="flex flex-wrap gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-          <a
-            href={pack.links.repo}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="transition hover:text-slate-900 dark:hover:text-white"
-          >
-            Repo
-          </a>
-          {pack.links.preview && (
-            <a
-              href={pack.links.preview}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="transition hover:text-slate-900 dark:hover:text-white"
-            >
-              Preview
-            </a>
+        <div className="flex flex-wrap items-center gap-2">
+          <TenneyButton as="a" href={tenneyUrl} size="sm" variant="primary">
+            Download Tenney
+          </TenneyButton>
+          {sclUrl && (
+            <TenneyButton as="a" href={sclUrl} size="sm" variant="secondary">
+              Scala (.scl)
+            </TenneyButton>
           )}
-          {pack.links.download && (
-            <a
-              href={pack.links.download}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="transition hover:text-slate-900 dark:hover:text-white"
-            >
-              Download
-            </a>
+          {kbmUrl && (
+            <TenneyButton as="a" href={kbmUrl} size="sm" variant="secondary">
+              KBM (.kbm)
+            </TenneyButton>
+          )}
+          {asclUrl && (
+            <TenneyButton as="a" href={asclUrl} size="sm" variant="secondary">
+              Ableton (.ascl)
+            </TenneyButton>
+          )}
+          <TenneyButton
+            variant="icon"
+            size="sm"
+            aria-label="Copy Tenney download link"
+            onClick={() => onCopy(pack)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8 7h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"
+              />
+            </svg>
+          </TenneyButton>
+          {isCopied && (
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+              Copied
+            </span>
           )}
         </div>
       </div>
@@ -211,17 +212,19 @@ function PackCard({ pack }: { pack: ScalePack }) {
 export default function Community() {
   const reducedMotion = useReducedMotion();
   const [activeSectionId, setActiveSectionId] = useState(anchorItems[0].id);
-  const [limitFilter, setLimitFilter] = useState<FilterOption["value"]>("all");
-  const hasPacks = scalePacks.length > 0;
-  const emptyStateText = "No community packs published yet. Be the first.";
+  const { data, isLoading, error } = useTenneyScalesIndex();
+  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const filteredPacks = useMemo(() => {
-    if (limitFilter === "all") return scalePacks;
-    if (limitFilter === "13+") {
-      return scalePacks.filter((pack) => pack.limit >= 13);
-    }
-    return scalePacks.filter((pack) => pack.limit === limitFilter);
-  }, [limitFilter]);
+  const packs = useMemo(() => {
+    if (!data?.packs) return [];
+    return [...data.packs].sort((a, b) => a.title.localeCompare(b.title));
+  }, [data]);
+
+  const hasPacks = packs.length > 0;
+  const showLoading = isLoading && !hasPacks;
+  const showError = !hasPacks && error;
+  const showEmpty = !hasPacks && !showLoading && !showError;
 
   useEffect(() => {
     const sections = Array.from(
@@ -254,6 +257,48 @@ export default function Community() {
     },
     [reducedMotion],
   );
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleCopy = useCallback((pack: TenneyScalePack) => {
+    const url = packTenneyUrl(pack);
+    const finish = () => {
+      setCopiedSlug(pack.slug);
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+      copyTimeoutRef.current = setTimeout(() => setCopiedSlug(null), 2000);
+    };
+
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard
+        .writeText(url)
+        .then(finish)
+        .catch(() => finish());
+      return;
+    }
+
+    const textArea = document.createElement("textarea");
+    textArea.value = url;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand("copy");
+    } catch {
+      // Ignore copy failures.
+    } finally {
+      document.body.removeChild(textArea);
+      finish();
+    }
+  }, []);
 
   return (
     <main className="relative tenney-pagegrid">
@@ -455,35 +500,44 @@ export default function Community() {
                     </details>
                   </div>
                 </div>
-                {hasPacks ? (
-                  <div className="flex flex-wrap gap-2">
-                    {limitFilters.map((option) => (
-                      <LimitChip
-                        key={option.label}
-                        option={option}
-                        active={limitFilter === option.value}
-                        onSelect={setLimitFilter}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    <LimitChip
-                      option={limitFilters[0]}
-                      active
-                      disabled
-                      onSelect={setLimitFilter}
-                    />
-                  </div>
+                {showLoading && (
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Loading packs…</p>
                 )}
-                {!hasPacks && (
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{emptyStateText}</p>
+                {showError && (
+                  <p className="text-sm text-rose-500">
+                    Unable to load community packs right now. Please try again soon.
+                  </p>
+                )}
+                {showEmpty && (
+                  <p className="text-sm text-slate-500 dark:text-slate-400">No packs yet.</p>
                 )}
                 <div
-                  className={`grid gap-4 ${hasPacks ? "md:grid-cols-2 lg:grid-cols-3" : "max-w-md"}`}
+                  className={`grid gap-4 ${
+                    hasPacks || showLoading ? "md:grid-cols-2 lg:grid-cols-3" : "max-w-md"
+                  }`}
                 >
-                  {filteredPacks.map((pack) => (
-                    <PackCard key={pack.title} pack={pack} />
+                  {showLoading &&
+                    Array.from({ length: 3 }).map((_, index) => (
+                      <div
+                        key={`pack-skeleton-${index}`}
+                        className="tenney-plusgrid flex h-full flex-col gap-4 rounded-card border border-tenney-line/70 bg-white/60 p-6 shadow-soft backdrop-blur-lg dark:bg-slate-950/40"
+                      >
+                        <div className="h-4 w-24 rounded-full bg-slate-200/70 dark:bg-slate-800/70" />
+                        <div className="space-y-2">
+                          <div className="h-5 w-2/3 rounded bg-slate-200/70 dark:bg-slate-800/70" />
+                          <div className="h-3 w-1/2 rounded bg-slate-200/70 dark:bg-slate-800/70" />
+                        </div>
+                        <div className="h-12 w-full rounded bg-slate-200/70 dark:bg-slate-800/70" />
+                        <div className="mt-auto h-8 w-full rounded bg-slate-200/70 dark:bg-slate-800/70" />
+                      </div>
+                    ))}
+                  {packs.map((pack) => (
+                    <PackCard
+                      key={pack.slug}
+                      pack={pack}
+                      onCopy={handleCopy}
+                      isCopied={copiedSlug === pack.slug}
+                    />
                   ))}
                   <div className="tenney-plusgrid flex h-full flex-col justify-between rounded-card border border-tenney-line/70 bg-white/80 p-6 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
                     <div className="space-y-3">
@@ -500,13 +554,13 @@ export default function Community() {
                     </div>
                     <TenneyButton
                       as="a"
-                      href={SCALE_LIBRARY_REPO_URL}
+                      href={SCALE_SUBMIT_URL}
                       target="_blank"
                       rel="noreferrer noopener"
                       size="sm"
                       variant="secondary"
                     >
-                      Open the scale repo
+                      Submit your pack
                     </TenneyButton>
                   </div>
                 </div>
