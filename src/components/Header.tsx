@@ -105,7 +105,7 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
               <img
                 src={`${baseUrl}assets/wordmark.png`}
                 alt="Tenney"
-                className="h-8 w-auto"
+                className="h-12 w-auto"
                 onError={() => setWordmarkError(true)}
               />
             ) : (
