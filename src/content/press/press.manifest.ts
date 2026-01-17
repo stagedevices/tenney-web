@@ -61,19 +61,19 @@ const pressManifest = {
     {
       label: "Tenney iPhone hero placeholder",
       deviceFamily: "iPhone",
-      pathSvg: "/assets/press/hero-iphone.svg",
+      pathSvg: "/assets/press/press-hero-device-iphone.png",
       caption: "Tenney for iPhone",
     },
     {
       label: "Tenney iPad hero placeholder",
       deviceFamily: "iPad",
-      pathSvg: "/assets/press/hero-ipad.svg",
+      pathSvg: "/assets/press/press-hero-device-ipad.png",
       caption: "Tenney for iPad",
     },
     {
       label: "Tenney Mac hero placeholder",
       deviceFamily: "Mac",
-      pathSvg: "/assets/press/hero-mac.svg",
+      pathSvg: "/assets/press/press-hero-device-mac.png",
       caption: "Tenney for Mac",
     },
   ],
