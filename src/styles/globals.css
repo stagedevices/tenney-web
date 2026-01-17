@@ -173,6 +173,13 @@ body {
   }
 }
 
+@keyframes pressHeroFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .tenney-plusgrid {
   position: relative;
   overflow: hidden;
@@ -198,6 +205,32 @@ body {
 .tenney-plusgrid > * {
   position: relative;
   z-index: 1;
+}
+
+.press-hero-fade {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: pressHeroFade 0.7s ease forwards;
+}
+
+.press-hero-fade--delay-1 {
+  animation-delay: 0.05s;
+}
+
+.press-hero-fade--delay-2 {
+  animation-delay: 0.12s;
+}
+
+.press-hero-fade--delay-3 {
+  animation-delay: 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press-hero-fade {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .tenney-player-shell {

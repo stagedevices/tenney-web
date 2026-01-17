@@ -70,15 +70,15 @@ export default function PressRail({
 
   return (
     <aside className={railClasses}>
-      <div className="space-y-4">
+      <div className="space-y-5">
         <TenneyButton
           variant="primary"
           size="sm"
-          onClick={() => forceDownload(pressKitUrl, pressKitFilename)}
+          onClick={() => forceDownload(pressKitUrl, pressKitFilename, { mimeType: "application/zip" })}
         >
           Download Press Kit
         </TenneyButton>
-        <a href={appStoreUrl} target="_blank" rel="noreferrer noopener">
+        <a href={appStoreUrl} target="_blank" rel="noreferrer noopener" className="pt-1">
           <img src={badgeSrc} alt="Download on the App Store" className="h-10" />
         </a>
         <TenneyButton
