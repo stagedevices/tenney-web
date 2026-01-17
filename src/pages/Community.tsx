@@ -107,18 +107,23 @@ function AnchorChip({
 function LimitChip({
   option,
   active,
+  disabled = false,
   onSelect,
 }: {
   option: FilterOption;
   active: boolean;
+  disabled?: boolean;
   onSelect: (value: FilterOption["value"]) => void;
 }) {
   return (
     <button
       type="button"
       onClick={() => onSelect(option.value)}
+      disabled={disabled}
       className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
-        active
+        disabled
+          ? "cursor-not-allowed border-tenney-line/60 bg-white/60 text-slate-400 shadow-none dark:bg-slate-950/40 dark:text-slate-500"
+          : active
           ? "border-sky-300 bg-white text-slate-900 shadow-soft dark:border-sky-500 dark:bg-slate-900 dark:text-white"
           : "border-tenney-line/70 bg-white/70 text-slate-600 hover:text-slate-900 dark:bg-slate-950/60 dark:text-slate-300 dark:hover:text-white"
       }`}
@@ -207,6 +212,8 @@ export default function Community() {
   const reducedMotion = useReducedMotion();
   const [activeSectionId, setActiveSectionId] = useState(anchorItems[0].id);
   const [limitFilter, setLimitFilter] = useState<FilterOption["value"]>("all");
+  const hasPacks = scalePacks.length > 0;
+  const emptyStateText = "No community packs published yet. Be the first.";
 
   const filteredPacks = useMemo(() => {
     if (limitFilter === "all") return scalePacks;
@@ -253,7 +260,7 @@ export default function Community() {
       <BackgroundField />
       <div className="mx-auto max-w-6xl space-y-12 px-6 py-16">
         <header className="relative grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
+          <div className="relative z-10 space-y-6">
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
                 Tenney Community
@@ -303,18 +310,10 @@ export default function Community() {
               </div>
             </div>
           </div>
-          <div className="relative flex min-h-[280px] items-center justify-center">
-            <div className="tenney-plusgrid relative w-full overflow-hidden rounded-card border border-tenney-line bg-white/70 p-6 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
-              <LatticeConstellation />
-              <div className="relative space-y-3 text-sm text-slate-600 dark:text-slate-300">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
-                  Lattice constellation
-                </p>
-                <p>
-                  A quiet grid of shared ratios. The community lives in Discord, while the scale
-                  library lives on GitHub for versioned contributions.
-                </p>
-              </div>
+          <div className="relative hidden min-h-[320px] lg:block">
+            <div className="absolute inset-0 overflow-hidden">
+              <LatticeConstellation className="absolute right-0 top-1/2 aspect-square w-[min(520px,40vw)] -translate-y-1/2 text-tenney-blue/30 dark:text-tenney-cyan/25" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-white/80 via-white/40 to-transparent dark:from-slate-950/80 dark:via-slate-950/30" />
             </div>
           </div>
         </header>
@@ -456,17 +455,33 @@ export default function Community() {
                     </details>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {limitFilters.map((option) => (
+                {hasPacks ? (
+                  <div className="flex flex-wrap gap-2">
+                    {limitFilters.map((option) => (
+                      <LimitChip
+                        key={option.label}
+                        option={option}
+                        active={limitFilter === option.value}
+                        onSelect={setLimitFilter}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
                     <LimitChip
-                      key={option.label}
-                      option={option}
-                      active={limitFilter === option.value}
+                      option={limitFilters[0]}
+                      active
+                      disabled
                       onSelect={setLimitFilter}
                     />
-                  ))}
-                </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  </div>
+                )}
+                {!hasPacks && (
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{emptyStateText}</p>
+                )}
+                <div
+                  className={`grid gap-4 ${hasPacks ? "md:grid-cols-2 lg:grid-cols-3" : "max-w-md"}`}
+                >
                   {filteredPacks.map((pack) => (
                     <PackCard key={pack.title} pack={pack} />
                   ))}
