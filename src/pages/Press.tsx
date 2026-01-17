@@ -5,6 +5,7 @@ import {
   APP_STORE_BADGE_LIGHT,
 } from "../components/CTACluster";
 import TenneyButton from "../components/TenneyButton";
+import PressDeviceFamily from "../components/press/PressDeviceFamily";
 import PressRail from "../components/press/PressRail";
 import pressManifest from "../content/press/press.manifest";
 import { base } from "../lib/base";
@@ -105,6 +106,18 @@ export default function Press() {
     Mac: pressManifest.heroDevices.find((device) => device.deviceFamily === "Mac"),
   };
 
+  const heroDeviceAssets = {
+    iPhone: heroDevices.iPhone
+      ? { src: resolveAssetPath(heroDevices.iPhone.pathSvg), alt: heroDevices.iPhone.caption }
+      : undefined,
+    iPad: heroDevices.iPad
+      ? { src: resolveAssetPath(heroDevices.iPad.pathSvg), alt: heroDevices.iPad.caption }
+      : undefined,
+    Mac: heroDevices.Mac
+      ? { src: resolveAssetPath(heroDevices.Mac.pathSvg), alt: heroDevices.Mac.caption }
+      : undefined,
+  };
+
   const quickFactsByLabel = useMemo(() => {
     return new Map(pressManifest.quickFacts.map((fact) => [fact.label, fact]));
   }, []);
@@ -163,41 +176,12 @@ export default function Press() {
             </div>
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full max-w-sm sm:max-w-md">
-                <div className="relative mx-auto h-[280px] w-full sm:h-[340px] lg:h-[360px]">
-                  {heroDevices.Mac ? (
-                    <div className="press-hero-fade press-hero-fade--delay-1 absolute right-1 top-0 z-0 w-[56%] sm:w-[50%] lg:w-[46%]">
-                      <div className="tenney-plusgrid rounded-card border border-tenney-line bg-white/70 p-3 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
-                        <img
-                          src={resolveAssetPath(heroDevices.Mac.pathSvg)}
-                          alt={heroDevices.Mac.caption}
-                          className="h-auto w-full rounded-xl border border-white/50 shadow-lg dark:border-slate-900/40"
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                  {heroDevices.iPad ? (
-                    <div className="press-hero-fade press-hero-fade--delay-2 absolute left-0 top-10 z-10 w-[50%] sm:top-12 sm:w-[44%] lg:w-[40%]">
-                      <div className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-3 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
-                        <img
-                          src={resolveAssetPath(heroDevices.iPad.pathSvg)}
-                          alt={heroDevices.iPad.caption}
-                          className="h-auto w-full rounded-[20px] border border-white/50 shadow-lg dark:border-slate-900/40"
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                  {heroDevices.iPhone ? (
-                    <div className="press-hero-fade press-hero-fade--delay-3 absolute left-1/2 top-6 z-20 w-[62%] -translate-x-1/2 sm:top-2 sm:w-[54%] lg:top-4 lg:w-[50%]">
-                      <div className="tenney-plusgrid rounded-card border border-tenney-line bg-white/80 p-2 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
-                        <img
-                          src={resolveAssetPath(heroDevices.iPhone.pathSvg)}
-                          alt={heroDevices.iPhone.caption}
-                          className="h-auto w-full rounded-[24px] border border-white/50 shadow-lg dark:border-slate-900/40"
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
+                <PressDeviceFamily
+                  iPhone={heroDeviceAssets.iPhone}
+                  iPad={heroDeviceAssets.iPad}
+                  Mac={heroDeviceAssets.Mac}
+                  isDesktop={isDesktop}
+                />
               </div>
             </div>
           </section>
