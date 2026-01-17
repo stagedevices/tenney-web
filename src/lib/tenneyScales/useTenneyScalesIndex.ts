@@ -3,6 +3,7 @@ import {
   fetchTenneyScalesIndex,
   isCacheFresh,
   readTenneyScalesCache,
+  TENNEY_SCALES_CACHE_KEY,
 } from "./fetchIndex";
 import type { TenneyScalesIndex } from "./types";
 
@@ -54,8 +55,24 @@ export function useTenneyScalesIndex(): TenneyScalesState {
   }, [load]);
 
   const refetch = useCallback(async () => {
-    await load(false);
-  }, [load]);
+    setIsLoading(true);
+    setError(null);
+    if (typeof window !== "undefined" && window.localStorage) {
+      try {
+        window.localStorage.removeItem(TENNEY_SCALES_CACHE_KEY);
+      } catch {
+        // Ignore storage errors
+      }
+    }
+    try {
+      const latest = await fetchTenneyScalesIndex({ forceFresh: true });
+      setData(latest);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Unable to load scale packs"));
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return { data, isLoading, error, refetch };
 }

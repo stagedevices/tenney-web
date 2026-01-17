@@ -10,6 +10,11 @@ type TenneyScalesCacheEntry = {
 };
 
 const REQUEST_TIMEOUT_MS = 8000;
+const CACHE_BUSTER_WINDOW_MS = 10 * 60 * 1000;
+
+type FetchTenneyScalesIndexOptions = {
+  forceFresh?: boolean;
+};
 
 function isTenneyScalesIndex(value: unknown): value is TenneyScalesIndex {
   if (!value || typeof value !== "object") return false;
@@ -46,11 +51,20 @@ export function isCacheFresh(entry: TenneyScalesCacheEntry) {
   return Date.now() - entry.savedAt < TENNEY_SCALES_CACHE_TTL_MS;
 }
 
+function addCacheBuster(url: string) {
+  const bucket = Math.floor(Date.now() / CACHE_BUSTER_WINDOW_MS);
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${bucket}`;
+}
+
 async function fetchIndexFromUrl(url: string): Promise<TenneyScalesIndex> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
-    const response = await fetch(url, { signal: controller.signal });
+    const response = await fetch(addCacheBuster(url), {
+      signal: controller.signal,
+      cache: "no-store",
+    });
     if (!response.ok) {
       throw new Error(`Failed to fetch Tenney scales index (${response.status})`);
     }
@@ -64,7 +78,10 @@ async function fetchIndexFromUrl(url: string): Promise<TenneyScalesIndex> {
   }
 }
 
-export async function fetchTenneyScalesIndex(): Promise<TenneyScalesIndex> {
+export async function fetchTenneyScalesIndex(
+  options: FetchTenneyScalesIndexOptions = {},
+): Promise<TenneyScalesIndex> {
+  const { forceFresh = false } = options;
   const cached = readTenneyScalesCache();
   try {
     const data = await fetchIndexFromUrl(TENNEY_SCALES_INDEX_PRIMARY);
@@ -80,7 +97,14 @@ export async function fetchTenneyScalesIndex(): Promise<TenneyScalesIndex> {
         return cached.data;
       }
       const error = fallbackError instanceof Error ? fallbackError : primaryError;
-      throw error instanceof Error ? error : new Error("Unable to load Tenney scales index");
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(
+        forceFresh
+          ? "Unable to refresh Tenney scales index"
+          : "Unable to load Tenney scales index",
+      );
     }
   }
 }
