@@ -17,7 +17,7 @@ type AnchorItem = {
 
 const DISCORD_URL = "https://discord.gg/REPLACE_ME";
 const SCALE_LIBRARY_REPO_URL = "https://github.com/stagedevices/tenney-scales";
-const SCALE_SUBMIT_URL = "https://github.com/stagedevices/tenney-scales/issues/new/choose";
+const SCALE_SUBMIT_URL = "https://github.com/stagedevices/tenney-scales/issues/new?template=pack_submission.yml";
 const FEATURE_REQUESTS_URL = "https://github.com/stagedevices/tenney/issues/new?template=feature_request.yml";
 const CODE_OF_CONDUCT_URL = "https://github.com/community/community/blob/main/CODE_OF_CONDUCT.md";
 
