@@ -10,6 +10,7 @@ import Press from "./pages/Press";
 import Privacy from "./pages/Privacy";
 import Features from "./pages/Features";
 import FeaturesWhitePaper from "./pages/FeaturesWhitePaper";
+import Community from "./pages/Community";
 
 const easing = [0.22, 0.8, 0.28, 1];
 
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/features" element={<Features />} />
             <Route path="/features/white-paper" element={<FeaturesWhitePaper />} />
             <Route path="/docs/*" element={<DocsRedirect />} />
+            <Route path="/community" element={<Community />} />
             <Route path="/beta" element={<Beta />} />
             <Route path="/press" element={<Press />} />
             <Route path="/privacy" element={<Privacy />} />
