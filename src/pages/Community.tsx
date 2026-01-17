@@ -1,17 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import BackgroundField from "../components/BackgroundField";
 import LatticeConstellation from "../components/LatticeConstellation";
 import TenneyButton from "../components/TenneyButton";
 import { IOS_TESTFLIGHT_LATEST } from "../components/CTACluster";
-import ScalePlayerPanel from "../components/ScalePlayer/ScalePlayerPanel";
+import DownloadPackModal from "../components/community/DownloadPackModal";
+import ScalePlayerModal from "../components/community/ScalePlayerModal";
 import { useReducedMotion } from "../lib/reducedMotion";
 import type { TenneyScalePack } from "../lib/tenneyScales/types";
-import {
-  packAsclUrl,
-  packKbmUrl,
-  packSclUrl,
-  packTenneyUrl,
-} from "../lib/tenneyScales/urls";
+import { TENNEY_SCALES_BASE } from "../lib/tenneyScales/urls";
 import { useTenneyScalesIndex } from "../lib/tenneyScales/useTenneyScalesIndex";
 
 type AnchorItem = {
@@ -106,19 +102,13 @@ function formatLicense(license: string) {
 
 function PackCard({
   pack,
-  onCopy,
-  isCopied,
   onPlay,
+  onDownload,
 }: {
   pack: TenneyScalePack;
-  onCopy: (pack: TenneyScalePack) => void;
-  isCopied: boolean;
   onPlay: (pack: TenneyScalePack) => void;
+  onDownload: (pack: TenneyScalePack) => void;
 }) {
-  const tenneyUrl = packTenneyUrl(pack);
-  const sclUrl = packSclUrl(pack);
-  const kbmUrl = packKbmUrl(pack);
-  const asclUrl = packAsclUrl(pack);
   return (
     <div className="tenney-plusgrid flex h-full flex-col gap-4 rounded-card border border-tenney-line/70 bg-white/80 p-6 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
       <div className="space-y-3">
@@ -164,51 +154,12 @@ function PackCard({
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <TenneyButton as="a" href={tenneyUrl} size="sm" variant="primary">
-            Download Tenney
-          </TenneyButton>
-          <TenneyButton size="sm" variant="secondary" onClick={() => onPlay(pack)}>
+          <TenneyButton size="sm" variant="primary" onClick={() => onPlay(pack)}>
             Play
           </TenneyButton>
-          {sclUrl && (
-            <TenneyButton as="a" href={sclUrl} size="sm" variant="secondary">
-              Scala (.scl)
-            </TenneyButton>
-          )}
-          {kbmUrl && (
-            <TenneyButton as="a" href={kbmUrl} size="sm" variant="secondary">
-              KBM (.kbm)
-            </TenneyButton>
-          )}
-          {asclUrl && (
-            <TenneyButton as="a" href={asclUrl} size="sm" variant="secondary">
-              Ableton (.ascl)
-            </TenneyButton>
-          )}
-          <TenneyButton
-            variant="icon"
-            size="sm"
-            aria-label="Copy Tenney download link"
-            onClick={() => onCopy(pack)}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8 7h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"
-              />
-            </svg>
+          <TenneyButton size="sm" variant="secondary" onClick={() => onDownload(pack)}>
+            Download
           </TenneyButton>
-          {isCopied && (
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-              Copied
-            </span>
-          )}
         </div>
       </div>
     </div>
@@ -219,9 +170,9 @@ export default function Community() {
   const reducedMotion = useReducedMotion();
   const [activeSectionId, setActiveSectionId] = useState(anchorItems[0].id);
   const { data, isLoading, error } = useTenneyScalesIndex();
-  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
-  const [activePackSlug, setActivePackSlug] = useState<string | null>(null);
-  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [activePack, setActivePack] = useState<TenneyScalePack | null>(null);
+  const [playerOpen, setPlayerOpen] = useState(false);
+  const [downloadOpen, setDownloadOpen] = useState(false);
 
   const packs = useMemo(() => {
     if (!data?.packs) return [];
@@ -232,7 +183,6 @@ export default function Community() {
   const showLoading = isLoading && !hasPacks;
   const showError = !hasPacks && error;
   const showEmpty = !hasPacks && !showLoading && !showError;
-  const activePack = packs.find((pack) => pack.slug === activePackSlug) ?? null;
 
   useEffect(() => {
     const sections = Array.from(
@@ -267,46 +217,10 @@ export default function Community() {
   );
 
   useEffect(() => {
-    return () => {
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  const handleCopy = useCallback((pack: TenneyScalePack) => {
-    const url = packTenneyUrl(pack);
-    const finish = () => {
-      setCopiedSlug(pack.slug);
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-      copyTimeoutRef.current = setTimeout(() => setCopiedSlug(null), 2000);
-    };
-
-    if (navigator?.clipboard?.writeText) {
-      navigator.clipboard
-        .writeText(url)
-        .then(finish)
-        .catch(() => finish());
-      return;
+    if (!playerOpen && !downloadOpen) {
+      setActivePack(null);
     }
-
-    const textArea = document.createElement("textarea");
-    textArea.value = url;
-    textArea.style.position = "fixed";
-    textArea.style.opacity = "0";
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-      document.execCommand("copy");
-    } catch {
-      // Ignore copy failures.
-    } finally {
-      document.body.removeChild(textArea);
-      finish();
-    }
-  }, []);
+  }, [downloadOpen, playerOpen]);
 
   return (
     <main className="relative tenney-pagegrid">
@@ -543,9 +457,14 @@ export default function Community() {
                     <PackCard
                       key={pack.slug}
                       pack={pack}
-                      onCopy={handleCopy}
-                      onPlay={(selected) => setActivePackSlug(selected.slug)}
-                      isCopied={copiedSlug === pack.slug}
+                      onPlay={(selected) => {
+                        setActivePack(selected);
+                        setPlayerOpen(true);
+                      }}
+                      onDownload={(selected) => {
+                        setActivePack(selected);
+                        setDownloadOpen(true);
+                      }}
                     />
                   ))}
                   <div className="tenney-plusgrid flex h-full flex-col justify-between rounded-card border border-tenney-line/70 bg-white/80 p-6 shadow-soft backdrop-blur-lg dark:bg-slate-950/60">
@@ -788,12 +707,23 @@ export default function Community() {
           </aside>
         </div>
       </div>
-      <ScalePlayerPanel
-        open={Boolean(activePack)}
+      <ScalePlayerModal
+        open={playerOpen}
         onOpenChange={(next) => {
-          if (!next) setActivePackSlug(null);
+          setPlayerOpen(next);
+          if (!next && !downloadOpen) setActivePack(null);
         }}
         pack={activePack}
+        baseUrl={TENNEY_SCALES_BASE}
+      />
+      <DownloadPackModal
+        open={downloadOpen}
+        onOpenChange={(next) => {
+          setDownloadOpen(next);
+          if (!next && !playerOpen) setActivePack(null);
+        }}
+        pack={activePack}
+        baseUrl={TENNEY_SCALES_BASE}
       />
     </main>
   );

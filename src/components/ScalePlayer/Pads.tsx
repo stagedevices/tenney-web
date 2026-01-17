@@ -6,13 +6,25 @@ type PadsProps = {
   activeDegrees: Set<number>;
   onNoteOn: (noteId: string, degreeIndex: number) => void;
   onNoteOff: (noteId: string, degreeIndex: number) => void;
+  offset?: number;
+  padCount?: number;
 };
 
 const PAD_COUNT = 12;
 
-export default function Pads({ degrees, activeDegrees, onNoteOn, onNoteOff }: PadsProps) {
+export default function Pads({
+  degrees,
+  activeDegrees,
+  onNoteOn,
+  onNoteOff,
+  offset = 0,
+  padCount = PAD_COUNT,
+}: PadsProps) {
   const pointerMap = useRef(new Map<number, number>());
-  const visibleDegrees = useMemo(() => degrees.slice(0, PAD_COUNT), [degrees]);
+  const visibleDegrees = useMemo(
+    () => degrees.slice(offset, offset + padCount),
+    [degrees, offset, padCount],
+  );
 
   const findDegreeAt = (x: number, y: number) => {
     const element = document.elementFromPoint(x, y) as HTMLElement | null;
@@ -60,11 +72,12 @@ export default function Pads({ degrees, activeDegrees, onNoteOn, onNoteOff }: Pa
       onPointerCancel={handlePointerUp}
     >
       {visibleDegrees.map((degree, index) => {
-        const isActive = activeDegrees.has(index);
+        const absoluteIndex = index + offset;
+        const isActive = activeDegrees.has(absoluteIndex);
         return (
           <div
-            key={degree.label + index}
-            data-degree={index}
+            key={degree.label + absoluteIndex}
+            data-degree={absoluteIndex}
             className={`tenney-pad tenney-plusgrid ${isActive ? "tenney-pad-active" : ""}`}
           >
             <span className="text-xs text-slate-700 dark:text-slate-200">{degree.label}</span>

@@ -2,6 +2,8 @@ import type { TenneyScalePack } from "./types";
 
 const BASE = "https://cdn.jsdelivr.net/gh/stagedevices/tenney-scales@main/";
 
+export const TENNEY_SCALES_BASE = BASE;
+
 export const TENNEY_SCALES_INDEX_PRIMARY = `${BASE}INDEX.json`;
 export const TENNEY_SCALES_INDEX_FALLBACK =
   "https://raw.githubusercontent.com/stagedevices/tenney-scales/main/INDEX.json";
