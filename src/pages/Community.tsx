@@ -3,6 +3,7 @@ import BackgroundField from "../components/BackgroundField";
 import LatticeConstellation from "../components/LatticeConstellation";
 import TenneyButton from "../components/TenneyButton";
 import { IOS_TESTFLIGHT_LATEST } from "../components/CTACluster";
+import ScalePlayerPanel from "../components/ScalePlayer/ScalePlayerPanel";
 import { useReducedMotion } from "../lib/reducedMotion";
 import type { TenneyScalePack } from "../lib/tenneyScales/types";
 import {
@@ -107,10 +108,12 @@ function PackCard({
   pack,
   onCopy,
   isCopied,
+  onPlay,
 }: {
   pack: TenneyScalePack;
   onCopy: (pack: TenneyScalePack) => void;
   isCopied: boolean;
+  onPlay: (pack: TenneyScalePack) => void;
 }) {
   const tenneyUrl = packTenneyUrl(pack);
   const sclUrl = packSclUrl(pack);
@@ -164,6 +167,9 @@ function PackCard({
           <TenneyButton as="a" href={tenneyUrl} size="sm" variant="primary">
             Download Tenney
           </TenneyButton>
+          <TenneyButton size="sm" variant="secondary" onClick={() => onPlay(pack)}>
+            Play
+          </TenneyButton>
           {sclUrl && (
             <TenneyButton as="a" href={sclUrl} size="sm" variant="secondary">
               Scala (.scl)
@@ -214,6 +220,7 @@ export default function Community() {
   const [activeSectionId, setActiveSectionId] = useState(anchorItems[0].id);
   const { data, isLoading, error } = useTenneyScalesIndex();
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+  const [activePackSlug, setActivePackSlug] = useState<string | null>(null);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const packs = useMemo(() => {
@@ -225,6 +232,7 @@ export default function Community() {
   const showLoading = isLoading && !hasPacks;
   const showError = !hasPacks && error;
   const showEmpty = !hasPacks && !showLoading && !showError;
+  const activePack = packs.find((pack) => pack.slug === activePackSlug) ?? null;
 
   useEffect(() => {
     const sections = Array.from(
@@ -536,6 +544,7 @@ export default function Community() {
                       key={pack.slug}
                       pack={pack}
                       onCopy={handleCopy}
+                      onPlay={(selected) => setActivePackSlug(selected.slug)}
                       isCopied={copiedSlug === pack.slug}
                     />
                   ))}
@@ -779,6 +788,13 @@ export default function Community() {
           </aside>
         </div>
       </div>
+      <ScalePlayerPanel
+        open={Boolean(activePack)}
+        onOpenChange={(next) => {
+          if (!next) setActivePackSlug(null);
+        }}
+        pack={activePack}
+      />
     </main>
   );
 }
