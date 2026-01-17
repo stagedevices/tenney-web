@@ -178,6 +178,12 @@ export default function Community() {
     if (!data?.packs) return [];
     return [...data.packs].sort((a, b) => a.title.localeCompare(b.title));
   }, [data]);
+  const generatedAtLabel = useMemo(() => {
+    if (!data?.generatedAt) return null;
+    const parsed = new Date(data.generatedAt);
+    if (Number.isNaN(parsed.getTime())) return null;
+    return parsed.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+  }, [data?.generatedAt]);
 
   const hasPacks = packs.length > 0;
   const showLoading = isLoading && !hasPacks;
@@ -432,6 +438,11 @@ export default function Community() {
                 )}
                 {showEmpty && (
                   <p className="text-sm text-slate-500 dark:text-slate-400">No packs yet.</p>
+                )}
+                {generatedAtLabel && (
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Index updated {generatedAtLabel}
+                  </p>
                 )}
                 <div
                   className={`grid gap-4 ${
