@@ -200,6 +200,68 @@ body {
   z-index: 1;
 }
 
+.tenney-chip.tenney-chip--chromatic {
+  position: relative;
+  z-index: 0;
+  overflow: visible;
+  --tenney-chromatic-rim-alpha: 0.68;
+  --tenney-chromatic-glow-alpha: 0.22;
+  --tenney-chromatic-angle: 220deg;
+  --tenney-chromatic-rim-gradient: conic-gradient(
+    from var(--tenney-chromatic-angle),
+    rgb(255 45 85 / var(--tenney-chromatic-rim-alpha)),
+    rgb(255 149 0 / var(--tenney-chromatic-rim-alpha)),
+    rgb(255 214 10 / var(--tenney-chromatic-rim-alpha)),
+    rgb(52 199 89 / var(--tenney-chromatic-rim-alpha)),
+    rgb(0 199 190 / var(--tenney-chromatic-rim-alpha)),
+    rgb(10 132 255 / var(--tenney-chromatic-rim-alpha)),
+    rgb(94 92 230 / var(--tenney-chromatic-rim-alpha)),
+    rgb(255 45 85 / var(--tenney-chromatic-rim-alpha))
+  );
+  --tenney-chromatic-glow-gradient: conic-gradient(
+    from var(--tenney-chromatic-angle),
+    rgb(255 45 85 / var(--tenney-chromatic-glow-alpha)),
+    rgb(255 149 0 / var(--tenney-chromatic-glow-alpha)),
+    rgb(255 214 10 / var(--tenney-chromatic-glow-alpha)),
+    rgb(52 199 89 / var(--tenney-chromatic-glow-alpha)),
+    rgb(0 199 190 / var(--tenney-chromatic-glow-alpha)),
+    rgb(10 132 255 / var(--tenney-chromatic-glow-alpha)),
+    rgb(94 92 230 / var(--tenney-chromatic-glow-alpha)),
+    rgb(255 45 85 / var(--tenney-chromatic-glow-alpha))
+  );
+}
+
+.dark .tenney-chip.tenney-chip--chromatic {
+  --tenney-chromatic-rim-alpha: 0.58;
+  --tenney-chromatic-glow-alpha: 0.28;
+}
+
+.tenney-chip.tenney-chip--chromatic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--tenney-chromatic-rim-gradient);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tenney-chip.tenney-chip--chromatic::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  background: var(--tenney-chromatic-glow-gradient);
+  filter: blur(20px);
+  transform: scale(1.05);
+  pointer-events: none;
+  z-index: -1;
+}
+
 .tenney-chip {
   position: relative;
   overflow: hidden;

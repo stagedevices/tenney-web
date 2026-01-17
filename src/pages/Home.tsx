@@ -174,6 +174,7 @@ export default function Home({ onStoryStateChange }: HomeProps) {
                 to: "/features#stage",
                 title: "Performance ready",
                 description: "High-contrast meters, confident touch targets, and a calm stage view.",
+                chromatic: true,
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 3l-1 7h7l-9 11 1-7H4z" />
@@ -184,6 +185,7 @@ export default function Home({ onStoryStateChange }: HomeProps) {
                 to: "/features#export",
                 title: "Research friendly",
                 description: "Capture ratio data, organize scales, and export sessions with context.",
+                chromatic: true,
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 3h6l2 4h4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7h4l2-4z" />
@@ -195,6 +197,7 @@ export default function Home({ onStoryStateChange }: HomeProps) {
                 to: "/features#export",
                 title: "Collaborative",
                 description: "Share scale libraries and lattice snapshots with ensembles.",
+                chromatic: true,
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 11a3 3 0 1 1 2.7-4.2" />
@@ -211,6 +214,7 @@ export default function Home({ onStoryStateChange }: HomeProps) {
                 title={item.title}
                 description={item.description}
                 icon={item.icon}
+                chromatic={item.chromatic}
               />
             ))}
           </div>
