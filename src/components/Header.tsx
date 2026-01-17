@@ -27,6 +27,7 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
     const path = location.pathname;
     if (path === "/") return "home";
     if (path.startsWith("/features")) return "features";
+    if (path.startsWith("/community")) return "community";
     if (path.startsWith("/beta")) return "beta";
     if (path.startsWith("/press")) return "press";
     if (path.startsWith("/privacy")) return "privacy";
@@ -52,6 +53,20 @@ export default function Header({ storyBeatIndex = 0, storyActive = false }: Head
         icon: (
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" />
+          </svg>
+        ),
+      },
+      {
+        id: "community",
+        label: "Community",
+        to: "/community",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8 11.5a3.5 3.5 0 1 0 7 0 3.5 3.5 0 0 0-7 0zM4.5 19c1.6-3 4.5-4 7.5-4s5.9 1 7.5 4"
+            />
           </svg>
         ),
       },
