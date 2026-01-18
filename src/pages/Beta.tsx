@@ -5,8 +5,8 @@ import { useTheme } from "../lib/theme";
 
 const IOS_TESTFLIGHT_LATEST = "https://testflight.apple.com/join/mWAWKYHT";
 const MAC_TESTFLIGHT_LATEST = "https://testflight.apple.com/join/ykZPRCGW";
-const ANDROID_REPO = "https://github.com/stagedevices/tenney-android";
-const ANDROID_ISSUES = "https://github.com/stagedevices/tenney-android/issues";
+const ANDROID_REPO = "https://github.com/stagedevices/Tenney/tree/android/oss-foundation";
+const ANDROID_ISSUES = "https://github.com/stagedevices/Tenney/issues";
 
 type BuildRowProps = {
   label: string;
